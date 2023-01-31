@@ -7,7 +7,7 @@ import {
   MAIL_PASSWORD,
   MAIL_PORT,
   MAIL_USERNAME,
-} from "@main/config/environment";
+} from "src/config/environment";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 

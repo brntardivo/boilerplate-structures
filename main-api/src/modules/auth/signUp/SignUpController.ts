@@ -15,13 +15,11 @@ export class SignUpController {
       });
 
       return res.status(201).json({
-        response: true,
         ...data,
       });
     } catch (err: any) {
       console.error(err);
       return res.status(err.statusCode || 400).json({
-        response: false,
         message: err.message || "unexpected error",
       });
     }

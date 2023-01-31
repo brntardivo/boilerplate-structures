@@ -1,11 +1,12 @@
 import { TokenEntity } from "@entities/TokenEntity";
 import { ITokensRepository } from "@repositories/ITokensRepository";
-import { Token } from "@database/entities/TokenEntity";
+import { TokenModel } from "@database/models/TokenModel";
 
 import { AppDataSource } from "@database/data-source";
 import { Repository } from "typeorm";
 
-const tokenRepository: Repository<Token> = AppDataSource.getRepository(Token);
+const tokenRepository: Repository<TokenModel> =
+  AppDataSource.getRepository(TokenModel);
 export class TokensRepository implements ITokensRepository {
   async exists({ id }: TokenEntity): Promise<boolean> {
     const exists = await tokenRepository.findOneBy({

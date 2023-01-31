@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { Slugify } from "@utils/helpers";
-import { WorkspaceStatus, WorkspaceTypes } from "@utils/constants";
+import { WorkspaceStatus, WorkspaceTypes } from "@config/constants";
 
 export class UserWorkspaceEntity {
   public readonly id: string;

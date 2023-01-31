@@ -1,9 +1,9 @@
 import { Entity, Column } from "typeorm";
-import { TokenUsages } from "@utils/constants";
-import { Model } from "@database/entities/BaseEntity";
+import { TokenUsages } from "@config/constants";
+import { BaseModel } from "@database/models/BaseModel";
 
 @Entity("tokens")
-export class Token extends Model {
+export class TokenModel extends BaseModel {
   @Column({ type: "uuid" })
   userId!: string;
 

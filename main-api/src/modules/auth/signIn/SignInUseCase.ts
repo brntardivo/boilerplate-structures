@@ -5,7 +5,7 @@ import { compareSync } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { unauthorized } from "@utils/errors";
 
-import { JWT_SECRET } from "@main/config/environment";
+import { JWT_SECRET } from "src/config/environment";
 export class SignInUseCase {
   constructor(
     private usersRepository: IUsersRepository,

@@ -5,8 +5,9 @@ import { ISignUpDTO } from "@modules/auth/signUp/ISignUpDTO";
 import { badRequest, unprocessableEntity } from "@utils/errors";
 import { ITokensRepository } from "@repositories/ITokensRepository";
 import { TokenEntity } from "@entities/TokenEntity";
-import { TokenUsages } from "@utils/constants";
-import { API_URL, API_PORT } from "@main/config/environment";
+import { TokenUsages } from "@config/constants";
+import { API_URL, API_PORT } from "@config/environment";
+import { add } from "date-fns";
 export class SignUpUseCase {
   constructor(
     private usersRepository: IUsersRepository,
@@ -17,7 +18,7 @@ export class SignUpUseCase {
     const exists = await this.usersRepository.findByEmail(data.email);
 
     if (exists) {
-      throw new unprocessableEntity("user already exists");
+      throw new unprocessableEntity("email already registered");
     }
 
     const user = await this.usersRepository.create(new UserEntity(data));
@@ -26,8 +27,7 @@ export class SignUpUseCase {
       throw new badRequest("error on create user");
     }
 
-    const date = new Date();
-    const expiresAt = date.setDate(date.getDate() + 1);
+    const expiresAt = add(new Date(), { days: 1 });
 
     const token = await this.tokensRepository.create(
       new TokenEntity({

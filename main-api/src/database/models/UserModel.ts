@@ -1,8 +1,9 @@
 import { Entity, Column, DeleteDateColumn, OneToMany } from "typeorm";
-import { UserWorkspace } from "@database/entities/UserWorkspaceEntity";
-import { Model } from "@database/entities/BaseEntity";
+import { UserWorkspaceModel } from "@database/models/UserWorkspaceModel";
+import { BaseModel } from "@database/models/BaseModel";
+
 @Entity("users")
-export class User extends Model {
+export class UserModel extends BaseModel {
   @Column({ type: "text" })
   name!: string;
 
@@ -15,8 +16,8 @@ export class User extends Model {
   @Column({ type: "text" })
   password!: string;
 
-  @OneToMany(() => UserWorkspace, (userWorkspace) => userWorkspace.user)
-  workspaces?: UserWorkspace[];
+  @OneToMany(() => UserWorkspaceModel, (userWorkspace) => userWorkspace.user)
+  workspaces?: UserWorkspaceModel[];
 
   @DeleteDateColumn()
   deletedAt?: Date;

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { API_NAME, API_PORT, DB_HOST, DB_PORT } from "@main/config/environment";
+import { API_NAME, API_PORT, DB_HOST, DB_PORT } from "src/config/environment";
 import { AppDataSource } from "@database/data-source";
 
 AppDataSource.initialize()
@@ -8,7 +8,7 @@ AppDataSource.initialize()
       `[\x1b[36mLOG\x1b[0m] successfully connected to the "${DB_HOST}:${DB_PORT}".`
     );
 
-    const app = (await import("./config/app")).default;
+    const app = (await import("./app")).default;
     app.listen(API_PORT || 8000, () => {
       console.log(
         `[\x1b[32mINIT\x1b[0m] ${API_NAME} is online on port ${API_PORT}`

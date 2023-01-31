@@ -1,12 +1,12 @@
 import { UserEntity } from "@entities/UserEntity";
 import { IUsersRepository } from "@repositories/IUsersRepository";
-
 import { Password } from "@utils/password";
-import { User } from "@database/entities/UserEntity";
+import { UserModel } from "@database/models/UserModel";
 import { Repository } from "typeorm";
 import { AppDataSource } from "@database/data-source";
 
-const userRepository: Repository<User> = AppDataSource.getRepository(User);
+const userRepository: Repository<UserModel> =
+  AppDataSource.getRepository(UserModel);
 
 export class UsersRepository implements IUsersRepository {
   async exists({ id }: UserEntity): Promise<boolean> {

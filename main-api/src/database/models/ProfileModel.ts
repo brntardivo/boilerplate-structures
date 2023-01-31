@@ -1,10 +1,10 @@
 import { Entity, Column, DeleteDateColumn } from "typeorm";
 
-import { RoleTypes } from "@utils/constants";
-import { Model } from "@database/entities/BaseEntity";
+import { RoleTypes } from "@config/constants";
+import { BaseModel } from "@database/models/BaseModel";
 
 @Entity("profiles")
-export class Profile extends Model {
+export class ProfileModel extends BaseModel {
   @Column({ type: "enum", enum: RoleTypes })
   role!: RoleTypes;
 

@@ -13,14 +13,12 @@ export class SignInController {
         password,
       });
 
-      return res.status(201).json({
-        response: true,
+      return res.status(200).json({
         ...data,
       });
     } catch (err: any) {
       console.error(err);
       return res.status(err.statusCode || 400).json({
-        response: false,
         message: err.message || "unexpected error",
       });
     }

@@ -1,15 +1,15 @@
 import { WorkspaceEntity } from "@entities/WorkspaceEntity";
 import { IWorkspacesRepository } from "@repositories/IWorkspacesRepository";
-import { Workspace } from "@database/entities/WorkspaceEntity";
-import { UserWorkspace } from "@database/entities/UserWorkspaceEntity";
+import { WorkspaceModel } from "@database/models/WorkspaceModel";
+// import { UserWorkspaceModel } from "@database/models/UserWorkspaceModel";
 import { Repository } from "typeorm";
 import { AppDataSource } from "@database/data-source";
 
-const workspaceRepository: Repository<Workspace> =
-  AppDataSource.getRepository(Workspace);
+const workspaceRepository: Repository<WorkspaceModel> =
+  AppDataSource.getRepository(WorkspaceModel);
 
-const userWorkspaceRepository: Repository<UserWorkspace> =
-  AppDataSource.getRepository(UserWorkspace);
+// const userWorkspaceRepository: Repository<UserWorkspaceModel> =
+//   AppDataSource.getRepository(UserWorkspaceModel);
 
 export class WorkspacesRepository implements IWorkspacesRepository {
   async exists({ id }: WorkspaceEntity): Promise<boolean> {

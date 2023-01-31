@@ -1,10 +1,10 @@
 import { Entity, Column, OneToMany } from "typeorm";
-import { WorkspaceStatus, WorkspaceTypes } from "@utils/constants";
-import { UserWorkspace } from "@database/entities/UserWorkspaceEntity";
-import { Model } from "@database/entities/BaseEntity";
+import { WorkspaceStatus, WorkspaceTypes } from "@config/constants";
+import { UserWorkspaceModel } from "@database/models/UserWorkspaceModel";
+import { BaseModel } from "@database/models/BaseModel";
 
 @Entity("workspaces")
-export class Workspace extends Model {
+export class WorkspaceModel extends BaseModel {
   @Column({ type: "text" })
   name!: string;
 
@@ -24,6 +24,9 @@ export class Workspace extends Model {
   })
   type!: WorkspaceTypes;
 
-  @OneToMany(() => UserWorkspace, (userWorkspace) => userWorkspace.workspace)
-  users?: UserWorkspace[];
+  @OneToMany(
+    () => UserWorkspaceModel,
+    (userWorkspace) => userWorkspace.workspace
+  )
+  users?: UserWorkspaceModel[];
 }

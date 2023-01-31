@@ -1,8 +1,8 @@
-import { Profile } from "@database/entities/ProfileEntity";
-import { Token } from "@database/entities/TokenEntity";
-import { User } from "@database/entities/UserEntity";
-import { UserWorkspace } from "@database/entities/UserWorkspaceEntity";
-import { Workspace } from "@database/entities/WorkspaceEntity";
+import { ProfileModel } from "@database/models/ProfileModel";
+import { TokenModel } from "@database/models/TokenModel";
+import { UserModel } from "@database/models/UserModel";
+import { UserWorkspaceModel } from "@database/models/UserWorkspaceModel";
+import { WorkspaceModel } from "@database/models/WorkspaceModel";
 import {
   DB_TYPE,
   DB_HOST,
@@ -10,7 +10,7 @@ import {
   DB_USERNAME,
   DB_PASSWORD,
   DB_DATABASE,
-} from "@main/config/environment";
+} from "src/config/environment";
 import { DataSource } from "typeorm";
 
 export const AppDataSource = new DataSource({
@@ -22,5 +22,11 @@ export const AppDataSource = new DataSource({
   database: DB_DATABASE,
   // logging: true,
   synchronize: true,
-  entities: [Profile, Token, User, UserWorkspace, Workspace],
+  entities: [
+    ProfileModel,
+    TokenModel,
+    UserModel,
+    UserWorkspaceModel,
+    WorkspaceModel,
+  ],
 });

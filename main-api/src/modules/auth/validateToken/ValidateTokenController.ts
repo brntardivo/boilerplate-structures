@@ -12,12 +12,9 @@ export class ValidateTokenController {
         token,
       });
 
-      return res.status(200).json({
-        response: true,
-      });
+      return res.status(200).json("OK");
     } catch (err: any) {
       return res.status(err.statusCode || 400).json({
-        response: false,
         message: err.message || "unexpected error",
       });
     }

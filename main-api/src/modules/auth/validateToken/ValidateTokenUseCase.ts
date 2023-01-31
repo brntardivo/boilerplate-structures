@@ -4,6 +4,7 @@ import { ITokensRepository } from "@repositories/ITokensRepository";
 import { badRequest, unprocessableEntity } from "@utils/errors";
 import { TokenEntity } from "@entities/TokenEntity";
 import { UserEntity } from "@entities/UserEntity";
+import { parseISO, formatISO } from "date-fns";
 
 export class ValidateTokenUseCase {
   constructor(
@@ -20,7 +21,7 @@ export class ValidateTokenUseCase {
     }
 
     if (token.expiresAt) {
-      const expiresAt = new Date(token.expiresAt);
+      const expiresAt = parseISO(token.expiresAt.toString());
 
       if (now > expiresAt) {
         await this.tokensRepository?.delete(token);
@@ -32,15 +33,15 @@ export class ValidateTokenUseCase {
     const user = await this.usersRepository.findById(token.userId);
 
     if (!user) {
-      throw new badRequest("user associated with this token not found");
+      throw new badRequest("unable to find owner of this token");
     }
 
     await this.usersRepository.update(
-      new UserEntity({ ...user, emailVerifiedAt: now }, user.id)
+      new UserEntity({ ...user, emailVerifiedAt: formatISO(now) }, user.id)
     );
 
     await this.tokensRepository.update(
-      new TokenEntity({ ...token, usedAt: now }, token.id)
+      new TokenEntity({ ...token, usedAt: formatISO(now) }, token.id)
     );
 
     return;

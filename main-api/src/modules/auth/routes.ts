@@ -17,7 +17,7 @@ router.post("/sign-in", SignInSchema.validate, async (request, response) => {
   return signInController.handle(request, response);
 });
 
-router.get(
+router.put(
   "/validate-token/:token",
   ValidateTokenSchema.validate,
   async (request, response) => {

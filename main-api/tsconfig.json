@@ -17,11 +17,11 @@
     "typeRoots": ["src/types", "node_modules/@types"],
     "paths": {
       "@database/*": ["./src/database/*"],
-      "@entities/*": ["./src/entities/*"],
+      "@entities/*": ["src/entities/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@providers/*": ["./src/providers/*"],
       "@repositories/*": ["./src/repositories/*"],
-      "@main/*": ["./src/main/*"],
+      "@config/*": ["./src/config/*"],
       "@modules/*": ["./src/modules/*"],
       "@utils/*": ["./src/utils/*"]
     }

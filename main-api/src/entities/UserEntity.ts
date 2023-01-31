@@ -5,9 +5,9 @@ export class UserEntity {
 
   public name: string;
   public email: string;
-  public emailVerifiedAt?: number | Date;
+  public emailVerifiedAt?: Date | string;
   public password: string;
-  public deletedAt?: number | Date;
+  public deletedAt?: Date | string;
 
   constructor(props: Omit<UserEntity, "id">, id?: string) {
     Object.assign(this, props);
