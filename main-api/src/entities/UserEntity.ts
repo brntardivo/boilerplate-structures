@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 
 export class UserEntity {
-  public readonly _id: string;
+  public readonly id: string;
 
   public name: string;
   public email: string;
@@ -9,11 +9,11 @@ export class UserEntity {
   public password: string;
   public deletedAt?: number | Date;
 
-  constructor(props: Omit<UserEntity, "id" | "_id">, _id?: string) {
+  constructor(props: Omit<UserEntity, "id">, id?: string) {
     Object.assign(this, props);
 
-    if (!_id) {
-      this._id = uuid();
+    if (!id) {
+      this.id = uuid();
     }
   }
 }

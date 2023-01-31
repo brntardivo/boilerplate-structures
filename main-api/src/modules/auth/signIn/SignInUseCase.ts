@@ -1,11 +1,11 @@
-import { IUsersRepository } from '@repositories/IUsersRepository';
-import { IWorkspacesRepository } from '@repositories/IWorkspacesRepository';
-import { ISignInDTO } from '@modules/auth/signIn/ISignInDTO';
-import { compareSync } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { unauthorized } from '@utils/errors';
+import { IUsersRepository } from "@repositories/IUsersRepository";
+import { IWorkspacesRepository } from "@repositories/IWorkspacesRepository";
+import { ISignInDTO } from "@modules/auth/signIn/ISignInDTO";
+import { compareSync } from "bcryptjs";
+import { sign } from "jsonwebtoken";
+import { unauthorized } from "@utils/errors";
 
-import { JWT_SECRET } from '@main/config/environment';
+import { JWT_SECRET } from "@main/config/environment";
 export class SignInUseCase {
   constructor(
     private usersRepository: IUsersRepository,
@@ -15,34 +15,34 @@ export class SignInUseCase {
     const user = await this.usersRepository.findByEmail(data.email);
 
     if (!user) {
-      throw new unauthorized('invalid credentials');
+      throw new unauthorized("invalid credentials");
     }
 
     if (!user.emailVerifiedAt) {
-      throw new unauthorized('email not verified');
+      throw new unauthorized("email not verified");
     }
 
     if (!compareSync(data.password, user.password)) {
-      throw new unauthorized('invalid credentials');
+      throw new unauthorized("invalid credentials");
     }
 
-    const workplaces = await this.workspacesRepository.findByUser(user._id);
+    const workplaces = await this.workspacesRepository.findByUser(user.id);
 
     const token = sign(
       {
-        userId: user._id
+        userId: user.id,
       },
       JWT_SECRET
     );
 
     return {
       user: {
-        _id: user._id,
+        id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
       },
       workplaces,
-      token
+      token,
     };
   }
 }

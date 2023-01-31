@@ -2,38 +2,35 @@ import { v4 as uuid } from "uuid";
 import { Slugify } from "@utils/helpers";
 import { WorkspaceStatus, WorkspaceTypes } from "@utils/constants";
 
-export class WorkspaceUserRelationshipEntity {
-  public readonly _id: string;
+export class UserWorkspaceEntity {
+  public readonly id: string;
 
   public userId: string;
-  public role?: string;
+  public profileId: string;
+  public workspaceId: string;
 
-  constructor(
-    props: Omit<WorkspaceUserRelationshipEntity, "id" | "_id">,
-    _id?: string
-  ) {
+  constructor(props: Omit<UserWorkspaceEntity, "id">, id?: string) {
     Object.assign(this, props);
 
-    if (!_id) {
-      this._id = uuid();
+    if (!id) {
+      this.id = uuid();
     }
   }
 }
 
 export class WorkspaceEntity {
-  public readonly _id: string;
+  public readonly id: string;
 
   public name: string;
   public slug?: string;
   public status?: WorkspaceStatus;
   public type: WorkspaceTypes;
-  public users: Array<WorkspaceUserRelationshipEntity>;
 
-  constructor(props: Omit<WorkspaceEntity, "id" | "_id">, _id?: string) {
+  constructor(props: Omit<WorkspaceEntity, "id">, id?: string) {
     Object.assign(this, props);
 
-    if (!_id) {
-      this._id = uuid();
+    if (!id) {
+      this.id = uuid();
     }
 
     if (!this.slug) {

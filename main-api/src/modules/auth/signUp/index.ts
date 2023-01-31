@@ -1,8 +1,8 @@
-import { SignUpUseCase } from '@modules/auth/signUp/SignUpUseCase';
-import { SignUpController } from '@modules/auth/signUp/SignUpController';
-import { UsersRepository } from '@repositories/implementations/UsersRepository';
-import { OracleMailDeliveryProvider } from '@providers/implementations/OracleMailDeliveryProvider';
-import { TokensRepository } from '@repositories/implementations/TokensRepository';
+import { SignUpUseCase } from "@modules/auth/signUp/SignUpUseCase";
+import { SignUpController } from "@modules/auth/signUp/SignUpController";
+import { UsersRepository } from "@repositories/implementations/UsersRepository";
+import { OracleMailDeliveryProvider } from "@providers/implementations/OracleMailDeliveryProvider";
+import { TokensRepository } from "@repositories/implementations/TokensRepository";
 
 const usersRepository = new UsersRepository();
 const oracleMailDeliveryProvider = new OracleMailDeliveryProvider();

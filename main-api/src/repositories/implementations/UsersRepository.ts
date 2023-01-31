@@ -1,97 +1,76 @@
-import { UserEntity } from '@entities/UserEntity';
-import { IUsersRepository } from '@repositories/IUsersRepository';
-import { TransactionRepository } from '@repositories/TransactionRepository';
-import { Password } from '@utils/password';
-import { userModel } from '@database/models/UserModel';
+import { UserEntity } from "@entities/UserEntity";
+import { IUsersRepository } from "@repositories/IUsersRepository";
 
-export class UsersRepository
-  extends TransactionRepository
-  implements IUsersRepository
-{
-  async exists(user: UserEntity): Promise<boolean> {
-    const exists = await userModel.exists({
-      _id: user._id,
-      deletedAt: { $eq: null }
+import { Password } from "@utils/password";
+import { User } from "@database/entities/UserEntity";
+import { Repository } from "typeorm";
+import { AppDataSource } from "@database/data-source";
+
+const userRepository: Repository<User> = AppDataSource.getRepository(User);
+
+export class UsersRepository implements IUsersRepository {
+  async exists({ id }: UserEntity): Promise<boolean> {
+    const exists = await userRepository.findOneBy({
+      id,
     });
 
-    return exists?._id ? true : false;
+    return exists?.id ? true : false;
   }
 
-  async findById(_id: string): Promise<UserEntity | null> {
-    const user = await userModel.findOne(
-      {
-        _id,
-        deletedAt: { $eq: null }
-      },
-      null,
-      { session: this.sessionInstance }
-    );
+  async findById(id: string): Promise<UserEntity | null> {
+    const user = await userRepository.findOneBy({
+      id,
+    });
 
     if (user) {
-      return new UserEntity(user.toJSON(), user._id);
+      return new UserEntity(user, user.id);
     }
 
     return null;
   }
 
   async findByEmail(email: string): Promise<UserEntity | null> {
-    const user = await userModel.findOne(
-      {
-        email,
-        deletedAt: { $eq: null }
-      },
-      null,
-      { session: this.sessionInstance }
-    );
+    const user = await userRepository.findOneBy({
+      email,
+    });
 
     if (user) {
-      return new UserEntity(user.toJSON(), user._id);
+      return new UserEntity(user, user.id);
     }
 
     return null;
   }
 
-  async save(user: UserEntity): Promise<UserEntity | null> {
-    const exists = await this.findById(user._id);
+  async create(user: UserEntity): Promise<UserEntity | null> {
+    Object.assign(user, {
+      password: Password.hash(user.password),
+    });
 
-    if (!exists) {
-      user = {
-        ...user,
-        password: Password.hash(user.password)
-      };
-    }
-
-    const data = await userModel.findOneAndUpdate(
-      {
-        _id: user._id
-      },
-      {
-        ...exists,
-        ...user
-      },
-      { new: true, upsert: true, session: this.sessionInstance }
-    );
+    const data = await userRepository.save(userRepository.create(user));
 
     if (data) {
-      return new UserEntity(data.toJSON(), data._id);
+      return new UserEntity(data, user.id);
     }
 
     return null;
   }
 
-  async delete(user: UserEntity): Promise<void> {
-    const deletedAt = new Date();
+  async update(user: UserEntity): Promise<UserEntity | null> {
+    const data = await userRepository.findOneBy({ id: user.id });
 
-    await userModel.findOneAndUpdate(
-      {
-        _id: user._id
-      },
-      {
-        $set: {
-          deletedAt
-        }
-      },
-      { session: this.sessionInstance }
-    );
+    if (data) {
+      Object.assign(data, user);
+
+      const updatedData = await data.save();
+
+      if (updatedData) {
+        return new UserEntity(updatedData, user.id);
+      }
+    }
+    return null;
+  }
+
+  async delete({ id }: UserEntity): Promise<void> {
+    await userRepository.softDelete(id);
   }
 }

@@ -1,60 +1,63 @@
-import { TokenEntity } from '@entities/TokenEntity';
-import { ITokensRepository } from '@repositories/ITokensRepository';
-import { tokenModel } from 'src/database/models/TokenModel';
-import { TransactionRepository } from '@repositories/TransactionRepository';
+import { TokenEntity } from "@entities/TokenEntity";
+import { ITokensRepository } from "@repositories/ITokensRepository";
+import { Token } from "@database/entities/TokenEntity";
 
-export class TokensRepository
-  extends TransactionRepository
-  implements ITokensRepository
-{
-  async exists(token: TokenEntity): Promise<boolean> {
-    const exists = await tokenModel.exists({
-      _id: token._id
+import { AppDataSource } from "@database/data-source";
+import { Repository } from "typeorm";
+
+const tokenRepository: Repository<Token> = AppDataSource.getRepository(Token);
+export class TokensRepository implements ITokensRepository {
+  async exists({ id }: TokenEntity): Promise<boolean> {
+    const exists = await tokenRepository.findOneBy({
+      id,
     });
 
-    return exists?._id ? true : false;
+    return exists?.id ? true : false;
   }
 
-  async findById(_id: string): Promise<TokenEntity | null> {
-    const token = await tokenModel.findOne(
-      {
-        _id
-      },
-      null,
-      { session: this.sessionInstance }
-    );
+  async findById(id: string): Promise<TokenEntity | null> {
+    const token = await tokenRepository.findOneBy({
+      id,
+    });
 
     if (token) {
-      return new TokenEntity(token.toJSON(), token._id);
+      return new TokenEntity(token, token.id);
     }
 
     return null;
   }
 
-  async save(token: TokenEntity): Promise<TokenEntity | null> {
-    const data = await tokenModel.findOneAndUpdate(
-      {
-        _id: token._id,
-        userId: token.userId,
-        usage: token.usage
-      },
-      token,
-      { new: true, upsert: true, session: this.sessionInstance }
-    );
+  async create(token: TokenEntity): Promise<TokenEntity | null> {
+    const data = await tokenRepository.save(tokenRepository.create(token));
 
     if (data) {
-      return new TokenEntity(data.toJSON(), data._id);
+      return new TokenEntity(data, token.id);
     }
 
     return null;
   }
 
-  async delete(token: TokenEntity): Promise<void> {
-    await tokenModel.deleteMany(
-      {
-        _id: token._id
-      },
-      { session: this.sessionInstance }
-    );
+  async update(token: TokenEntity): Promise<TokenEntity | null> {
+    const data = await tokenRepository.findOneBy({
+      id: token.id,
+    });
+
+    if (data) {
+      Object.assign(data, token);
+
+      const updatedData = await data.save();
+
+      if (updatedData) {
+        return new TokenEntity(updatedData, token.id);
+      }
+    }
+
+    return null;
+  }
+
+  async delete({ id }: TokenEntity): Promise<void> {
+    await tokenRepository.delete({
+      id,
+    });
   }
 }

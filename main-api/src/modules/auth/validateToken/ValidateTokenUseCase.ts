@@ -1,9 +1,9 @@
-import { IValidateTokenDTO } from '@modules/auth/validateToken/IValidateTokenDTO';
-import { IUsersRepository } from '@repositories/IUsersRepository';
-import { ITokensRepository } from '@repositories/ITokensRepository';
-import { badRequest, unprocessableEntity } from '@utils/errors';
-import { TokenEntity } from '@entities/TokenEntity';
-import { UserEntity } from '@entities/UserEntity';
+import { IValidateTokenDTO } from "@modules/auth/validateToken/IValidateTokenDTO";
+import { IUsersRepository } from "@repositories/IUsersRepository";
+import { ITokensRepository } from "@repositories/ITokensRepository";
+import { badRequest, unprocessableEntity } from "@utils/errors";
+import { TokenEntity } from "@entities/TokenEntity";
+import { UserEntity } from "@entities/UserEntity";
 
 export class ValidateTokenUseCase {
   constructor(
@@ -16,7 +16,7 @@ export class ValidateTokenUseCase {
     const token = await this.tokensRepository.findById(data.token);
 
     if (!token) {
-      throw new unprocessableEntity('invalid token');
+      throw new unprocessableEntity("invalid token");
     }
 
     if (token.expiresAt) {
@@ -25,22 +25,22 @@ export class ValidateTokenUseCase {
       if (now > expiresAt) {
         await this.tokensRepository?.delete(token);
 
-        throw new unprocessableEntity('expired token');
+        throw new unprocessableEntity("expired token");
       }
     }
 
     const user = await this.usersRepository.findById(token.userId);
 
     if (!user) {
-      throw new badRequest('user associated with this token not found');
+      throw new badRequest("user associated with this token not found");
     }
 
-    await this.usersRepository.save(
-      new UserEntity({ ...user, emailVerifiedAt: now }, user._id)
+    await this.usersRepository.update(
+      new UserEntity({ ...user, emailVerifiedAt: now }, user.id)
     );
 
-    await this.tokensRepository.save(
-      new TokenEntity({ ...token, usedAt: now }, token._id)
+    await this.tokensRepository.update(
+      new TokenEntity({ ...token, usedAt: now }, token.id)
     );
 
     return;

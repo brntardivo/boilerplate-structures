@@ -1,9 +1,6 @@
-import { TokenEntity } from '@entities/TokenEntity';
-import { IBaseRepository } from '@repositories/IBaseRepository';
-import { ITransactionRepository } from './ITransactionRepository';
+import { TokenEntity } from "@entities/TokenEntity";
+import { IBaseRepository } from "@repositories/IBaseRepository";
 
-export interface ITokensRepository
-  extends IBaseRepository<TokenEntity>,
-    ITransactionRepository {
+export interface ITokensRepository extends IBaseRepository<TokenEntity> {
   delete(t: TokenEntity): Promise<void>;
 }

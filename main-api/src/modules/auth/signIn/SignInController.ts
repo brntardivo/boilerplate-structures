@@ -1,5 +1,5 @@
-import { SignInUseCase } from '@modules/auth/signIn/SignInUseCase';
-import { Request, Response } from 'express';
+import { SignInUseCase } from "@modules/auth/signIn/SignInUseCase";
+import { Request, Response } from "express";
 
 export class SignInController {
   constructor(private signInUseCase: SignInUseCase) {}
@@ -10,18 +10,18 @@ export class SignInController {
     try {
       const data = await this.signInUseCase.execute({
         email,
-        password
+        password,
       });
 
       return res.status(201).json({
         response: true,
-        ...data
+        ...data,
       });
     } catch (err: any) {
       console.error(err);
       return res.status(err.statusCode || 400).json({
         response: false,
-        message: err.message || 'unexpected error'
+        message: err.message || "unexpected error",
       });
     }
   }

@@ -1,5 +1,5 @@
-import { SignUpUseCase } from '@modules/auth/signUp/SignUpUseCase';
-import { Request, Response } from 'express';
+import { SignUpUseCase } from "@modules/auth/signUp/SignUpUseCase";
+import { Request, Response } from "express";
 
 export class SignUpController {
   constructor(private signUpUseCase: SignUpUseCase) {}
@@ -11,18 +11,18 @@ export class SignUpController {
       const data = await this.signUpUseCase.execute({
         name,
         email,
-        password
+        password,
       });
 
       return res.status(201).json({
         response: true,
-        ...data
+        ...data,
       });
     } catch (err: any) {
       console.error(err);
       return res.status(err.statusCode || 400).json({
         response: false,
-        message: err.message || 'unexpected error'
+        message: err.message || "unexpected error",
       });
     }
   }

@@ -1,7 +1,7 @@
-import { SignInUseCase } from '@modules/auth/signIn/SignInUseCase';
-import { SignInController } from '@modules/auth/signIn/SignInController';
-import { UsersRepository } from '@repositories/implementations/UsersRepository';
-import { WorkspacesRepository } from '@repositories/implementations/WorkspacesRepository';
+import { SignInUseCase } from "@modules/auth/signIn/SignInUseCase";
+import { SignInController } from "@modules/auth/signIn/SignInController";
+import { UsersRepository } from "@repositories/implementations/UsersRepository";
+import { WorkspacesRepository } from "@repositories/implementations/WorkspacesRepository";
 
 const usersRepository = new UsersRepository();
 const workspacesRepository = new WorkspacesRepository();

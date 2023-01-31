@@ -1,5 +1,5 @@
-import { ValidateTokenUseCase } from '@modules/auth/validateToken/ValidateTokenUseCase';
-import { Request, Response } from 'express';
+import { ValidateTokenUseCase } from "@modules/auth/validateToken/ValidateTokenUseCase";
+import { Request, Response } from "express";
 
 export class ValidateTokenController {
   constructor(private validateTokenUseCase: ValidateTokenUseCase) {}
@@ -9,16 +9,16 @@ export class ValidateTokenController {
 
     try {
       await this.validateTokenUseCase.execute({
-        token
+        token,
       });
 
       return res.status(200).json({
-        response: true
+        response: true,
       });
     } catch (err: any) {
       return res.status(err.statusCode || 400).json({
         response: false,
-        message: err.message || 'unexpected error'
+        message: err.message || "unexpected error",
       });
     }
   }
