@@ -5,6 +5,9 @@ export const API_NAME = env("API_NAME", "main-api");
 export const API_URL = env("API_URL", "http://localhost");
 export const API_PORT = env("API_PORT", 8000);
 
+export const CLIENT_URL = env("CLIENT_URL", "http://localhost:8000");
+export const MANAGEMENT_URL = env("MANAGEMENT_URL", "http://localhost:9000");
+
 export const DB_TYPE = env("DB_TYPE", "postgre");
 export const DB_HOST = env("DB_HOST", "localhost");
 export const DB_PORT = env("DB_PORT", 5432);

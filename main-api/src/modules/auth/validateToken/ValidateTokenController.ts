@@ -4,15 +4,15 @@ import { Request, Response } from "express";
 export class ValidateTokenController {
   constructor(private validateTokenUseCase: ValidateTokenUseCase) {}
 
-  async handle(req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<Response | void> {
     const { token } = req.params;
 
     try {
-      await this.validateTokenUseCase.execute({
+      const url = await this.validateTokenUseCase.execute({
         token,
       });
 
-      return res.status(200).json("OK");
+      return res.status(301).redirect(url);
     } catch (err: any) {
       return res.status(err.statusCode || 400).json({
         message: err.message || "unexpected error",

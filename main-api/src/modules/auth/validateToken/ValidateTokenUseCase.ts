@@ -5,13 +5,14 @@ import { badRequest, unprocessableEntity } from "@utils/errors";
 import { TokenEntity } from "@entities/TokenEntity";
 import { UserEntity } from "@entities/UserEntity";
 import { parseISO, formatISO } from "date-fns";
+import { CLIENT_URL } from "@config/environment";
 
 export class ValidateTokenUseCase {
   constructor(
     private usersRepository: IUsersRepository,
     private tokensRepository: ITokensRepository
   ) {}
-  async execute(data: IValidateTokenDTO): Promise<void> {
+  async execute(data: IValidateTokenDTO): Promise<string> {
     const now = new Date();
 
     const token = await this.tokensRepository.findById(data.token);
@@ -44,6 +45,6 @@ export class ValidateTokenUseCase {
       new TokenEntity({ ...token, usedAt: formatISO(now) }, token.id)
     );
 
-    return;
+    return CLIENT_URL;
   }
 }
