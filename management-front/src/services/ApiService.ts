@@ -70,8 +70,6 @@ export class ApiService<T> implements IApiService<T> {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
     }
 
-    console.log(`HEADERS: ${JSON.stringify(headers, null, 3)}`);
-
     return headers;
   }
 
@@ -113,11 +111,6 @@ export class ApiService<T> implements IApiService<T> {
     forceToken = null,
     sendBearerToken = true,
   }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- POST ENCODED ----------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`PARAMETROS: ${JSON.stringify(params, null, 3)}`);
-    console.log(`----------------------------------------------------------`);
-
     return this.fetch
       .post(endpoint, this.makeEncodedParams(params), {
         headers: this.setupHeaders(true, forceToken, sendBearerToken, true),
@@ -141,11 +134,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   postMultipart({ endpoint, params }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- POST MULTIPART ----------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`PARAMETROS: ${JSON.stringify(params, null, 3)}`);
-    console.log(`----------------------------------------------------------`);
-
     return this.fetch
       .post(endpoint, this.makeItMultipartParams(params), {
         headers: this.setupHeaders(true),
@@ -177,11 +165,6 @@ export class ApiService<T> implements IApiService<T> {
     sendBearerToken = true,
     encoded = false,
   }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- POST  ----------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`PARAMETROS: ${JSON.stringify(params, null, 3)}`);
-    console.log(`------------------------------------------------- `);
-
     return this.fetch
       .post(endpoint, params, {
         headers: this.setupHeaders(false, forceToken, sendBearerToken, encoded),
@@ -207,10 +190,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   get({ endpoint, token = null, sendBearerToken = true }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- GET ----------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`----------------------------------------------------------`);
-
     return this.fetch
       .get(endpoint, {
         headers: this.setupHeaders(false, token, sendBearerToken),
@@ -236,11 +215,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   putMultipart({ endpoint, params }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- PUT MULTIPART ----------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`PARAMETROS: ${JSON.stringify(params, null, 3)}`);
-    console.log(`----------------------------------------------------------`);
-
     return this.fetch
       .put(endpoint, this.makeItMultipartParams(params), {
         headers: this.setupHeaders(true),
@@ -261,11 +235,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   put({ endpoint, params, forceToken = null, sendBearerToken = true }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- PUT -------------------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`PARAMETROS: ${JSON.stringify(params, null, 3)}`);
-    console.log(`----------------------------------------------------------`);
-
     return this.fetch
       .put(endpoint, params, {
         headers: this.setupHeaders(false, forceToken, sendBearerToken),
@@ -291,10 +260,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   del({ endpoint, forceToken = null, sendBearerToken = true }: IGenericMethod): Promise<T> {
-    console.log(`-------------------- DEL -------------------------------`);
-    console.log(`ENDPOINT: ${endpoint}`);
-    console.log(`----------------------------------------------------------`);
-
     return this.fetch
       .delete(endpoint, {
         headers: this.setupHeaders(false, forceToken, sendBearerToken),
@@ -315,12 +280,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   getExternal(url: string, headers: DynamicObject = {}): Promise<T> {
-    console.log(`-------------------- GET EXTERNAL----------------------`);
-    console.log(`ENDPOINT: ${url}`);
-    console.log(`----------------------------------------------------------`);
-    console.log(`HEADERS: `, headers);
-    console.log(`----------------------------------------------------------`);
-
     return axios
       .get(url, {
         headers,
@@ -333,14 +292,6 @@ export class ApiService<T> implements IApiService<T> {
   }
 
   postExternal(url: string, headers: AxiosRequestHeaders, body: BodyInit): Promise<T> {
-    console.log(`-------------------- POST EXTERNAL----------------------`);
-    console.log(`ENDPOINT: ${url}`);
-    console.log(`----------------------------------------------------------`);
-    console.log(`HEADERS: `, headers);
-    console.log(`----------------------------------------------------------`);
-    console.log(`BODY: `, body);
-    console.log(`----------------------------------------------------------`);
-
     return axios
       .post(url, body, {
         headers,
