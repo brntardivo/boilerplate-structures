@@ -27,7 +27,7 @@
       "@mixins/*": ["./src/mixins/*"],
       "@models/*": ["./src/models/*"],
       "@router/*": ["./src/router/*"],
-      "@store/*": ["./src/store/*"],
+      "@stores/*": ["./src/stores/*"],
       "@utils/*": ["./src/utils/*"],
       "@views/*": ["./src/views/*"],
       "@modules/*": ["./src/modules/*"]
