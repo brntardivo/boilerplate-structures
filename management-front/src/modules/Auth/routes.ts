@@ -24,11 +24,11 @@ export const authRoutes = [
         },
       },
       {
-        name: 'AuthForgotPassword',
-        path: 'forgot-password',
-        component: () => import('@modules/Auth/views/ForgotPasswordView.vue'),
+        name: 'AuthPasswordRecovery',
+        path: 'password-recovery',
+        component: () => import('@modules/Auth/views/PasswordRecoveryView.vue'),
         meta: {
-          title: 'Forgot Password',
+          title: 'Password recovery',
           layout: ExternalLayout,
         },
       },

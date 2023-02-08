@@ -1,13 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import { isEmpty } from 'lodash';
 
-interface DynamicObject {
-  [key: string]: string | string[] | number | any;
+interface IDynamicObject {
+  [key: string]: string;
 }
 
 interface IGenericMethod {
   endpoint: string;
-  params?: DynamicObject;
+  params?: IDynamicObject;
   forceToken?: string | null;
   sendBearerToken?: boolean;
   encoded?: boolean;
@@ -20,9 +20,9 @@ export interface IApiService<T> {
     forceToken?: string | null,
     sendBearerToken?: boolean,
     encoded?: boolean
-  ): DynamicObject;
-  makeEncodedParams(params?: DynamicObject): string;
-  makeItMultipartParams(params?: DynamicObject): FormData;
+  ): IDynamicObject;
+  makeEncodedParams(params?: IDynamicObject): string;
+  makeItMultipartParams(params?: IDynamicObject): FormData;
   post(props: IGenericMethod): Promise<T>;
   postEncoded(props: IGenericMethod): Promise<T>;
   postMultipart(props: IGenericMethod): Promise<T>;
@@ -48,8 +48,8 @@ export class ApiService<T> implements IApiService<T> {
     forceToken: string | null = null,
     sendBearerToken = true,
     encoded = false
-  ): DynamicObject {
-    const headers: DynamicObject = {
+  ): IDynamicObject {
+    const headers: IDynamicObject = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     };
@@ -73,7 +73,7 @@ export class ApiService<T> implements IApiService<T> {
     return headers;
   }
 
-  makeEncodedParams(params?: DynamicObject): string {
+  makeEncodedParams(params?: IDynamicObject): string {
     const formBody = [];
 
     for (const property in params) {
@@ -85,18 +85,18 @@ export class ApiService<T> implements IApiService<T> {
     return formBody.join('&');
   }
 
-  makeItMultipartParams(params?: DynamicObject) {
+  makeItMultipartParams(params?: IDynamicObject) {
     const p = new FormData();
 
     if (isEmpty(params)) {
       return p;
     }
 
-    Object.keys(params).forEach(function (key, _) {
+    Object.keys(params).forEach(function (key) {
       if (Array.isArray(params[key])) {
-        params[key].map((r: any) => {
+        for (const r of params[key]) {
           p.append(`${key}[]`, r);
-        });
+        }
       } else {
         p.append(key, params[key]);
       }
@@ -279,7 +279,7 @@ export class ApiService<T> implements IApiService<T> {
       });
   }
 
-  getExternal(url: string, headers: DynamicObject = {}): Promise<T> {
+  getExternal(url: string, headers: IDynamicObject = {}): Promise<T> {
     return axios
       .get(url, {
         headers,

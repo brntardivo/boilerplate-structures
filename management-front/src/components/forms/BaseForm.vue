@@ -24,7 +24,7 @@
                 <span v-html="item.label"></span>
                 <span
                   v-if="item.validate && item.validate.required && item.validate.requiredIndicator"
-                  class="text-red-500 font-medium"
+                  class="text-red-500 font-medium pl-1"
                   >*</span
                 >
               </label>
@@ -345,6 +345,14 @@ watch(
   { deep: true, immediate: true }
 );
 
+const customSameAs =
+  (param: { target: string; form: IDynamicObject }) =>
+  (value: string): boolean => {
+    const i = param.target;
+
+    return param.form && value === param.form[i];
+  };
+
 watch(
   () => props.template,
   (template, prevTemplate) => {
@@ -370,103 +378,87 @@ watch(
               item.validate.requiredIndicator = true;
             }
 
-            if (item.validate.requiredMessage) {
-              rule.required = helpers.withMessage(item.validate.requiredMessage, required);
-            } else {
-              rule.required = required;
-            }
+            const requiredMessage = item.validate.requiredMessage ?? 'Required';
+
+            rule.required = helpers.withMessage(requiredMessage, required);
           }
 
           //email
           if (item.validate.email) {
-            if (item.validate.emailMessage) {
-              rule.email = helpers.withMessage(item.validate.emailMessage, email);
-            } else {
-              rule.email = email;
-            }
+            const emailMessage = item.validate.emailMessage ?? 'This is not a valid email address';
+
+            rule.email = helpers.withMessage(emailMessage, email);
           }
 
           //url
           if (item.validate.url) {
-            if (item.validate.urlMessage) {
-              rule.url = helpers.withMessage(item.validate.urlMessage, url);
-            } else {
-              rule.url = url;
-            }
+            const urlMessage = item.validate.urlMessage ?? 'This is not a valid URL';
+
+            rule.url = helpers.withMessage(urlMessage, url);
           }
 
           if (item.validate.sameAs) {
-            if (item.validate.sameAsMessage) {
-              rule.sameAs = helpers.withMessage(
-                item.validate.sameAsMessage,
-                customSameAs({ form, target: item.validate.sameAs })
-              );
-            } else {
-              rule.sameAs = customSameAs({
+            const sameAsMessage =
+              item.validate.sameAsMessage ??
+              `This field must be the same as ${item.validate.sameAs}`;
+
+            rule.sameAs = helpers.withMessage(
+              sameAsMessage,
+              customSameAs({
                 form,
                 target: item.validate.sameAs,
-              });
-            }
+              })
+            );
           }
 
           //minLength
           if (item.validate.minLength) {
-            if (item.validate.minLengthMessage) {
-              rule.minLength = helpers.withMessage(
-                item.validate.minLengthMessage,
-                minLength(item.validate.minLength)
-              );
-            } else {
-              rule.minLength = minLength(item.validate.minLength);
-            }
+            const minLengthMessage =
+              item.validate.minLengthMessage ??
+              `At least ${item.validate.minLength} characters are required`;
+
+            rule.minLength = helpers.withMessage(
+              minLengthMessage,
+              minLength(item.validate.minLength)
+            );
           }
 
           //maxLength
           if (item.validate.maxLength) {
-            if (item.validate.maxLengthMessage) {
-              rule.maxLength = helpers.withMessage(
-                item.validate.maxLengthMessage,
-                maxLength(item.validate.maxLength)
-              );
-            } else {
-              rule.maxLength = maxLength(item.validate.maxLength);
-            }
+            const maxLengthMessage =
+              item.validate.maxLengthMessage ??
+              `Less than ${item.validate.maxLength} characters required`;
+
+            rule.maxLength = helpers.withMessage(
+              maxLengthMessage,
+              maxLength(item.validate.maxLength)
+            );
           }
 
           //minValue
           if (item.validate.minValue) {
-            if (item.validate.minValueMessage) {
-              rule.minValue = helpers.withMessage(
-                item.validate.minValueMessage,
-                minValue(item.validate.minValue)
-              );
-            } else {
-              rule.minValue = minValue(item.validate.minValue);
-            }
+            const minValueMessage =
+              item.validate.minValueMessage ?? `Needs to be greater than ${item.validate.minValue}`;
+
+            rule.minValue = helpers.withMessage(minValueMessage, minValue(item.validate.minValue));
           }
 
           //maxValue
           if (item.validate.maxValue) {
-            if (item.validate.maxValueMessage) {
-              rule.maxValue = helpers.withMessage(
-                item.validate.maxValueMessage,
-                maxValue(item.validate.maxValue)
-              );
-            } else {
-              rule.maxValue = maxValue(item.validate.maxValue);
-            }
+            const maxValueMessage =
+              item.validate.maxValueMessage ?? `Needs to be less than ${item.validate.maxValue}`;
+
+            rule.maxValue = helpers.withMessage(maxValueMessage, maxValue(item.validate.maxValue));
           }
 
           //requiredIf
           if (item.validate.requiredIf && item.validate.requiredIfFn) {
-            if (item.validate.requiredIfMessage) {
-              rule.requiredIf = helpers.withMessage(
-                item.validate.requiredIfMessage,
-                requiredIf(item.validate.requiredIfFn)
-              );
-            } else {
-              rule.required = requiredIf(item.validate.requiredIfFn);
-            }
+            const requiredIfMessage = item.validate.requiredIfMessage ?? 'Required';
+
+            rule.required = helpers.withMessage(
+              requiredIfMessage,
+              requiredIf(item.validate.requiredIfFn)
+            );
           }
 
           //custom
@@ -555,14 +547,6 @@ const eventCallback = async (
     form = response;
   }
 };
-
-const customSameAs =
-  (param: { target: string; form: IDynamicObject }) =>
-  (value: string): boolean => {
-    const i = param.target;
-
-    return param.form && value === param.form[i];
-  };
 
 const setValueToObject = (
   object: IDynamicObject,

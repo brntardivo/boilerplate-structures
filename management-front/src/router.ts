@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { authRoutes } from '@modules/Auth/routes';
 import { homeRoutes } from '@modules/Home/routes';
+import { useAuthStore } from '@stores/auth';
 
 const appTitle = import.meta.env.VITE_APP_TITLE;
 
@@ -24,13 +25,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.authenticated)) {
-    next({
-      name: signInRoute,
-      query: { redirect: to.fullPath },
-    });
+  const store = useAuthStore();
 
-    return;
+  if (to.matched.some((record) => record.meta.authenticated)) {
+    if (!store.getJWTState) {
+      next({
+        name: signInRoute,
+        query: { redirect: to.fullPath },
+      });
+
+      return;
+    }
   }
 
   next();
