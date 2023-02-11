@@ -1,11 +1,12 @@
 <template>
   <div class="sign-up-view">
+    <header-container
+      title="Sign up here !"
+      subtitle="Fill in the fields below to make the initial registration on the platform" />
     <content-container>
       <go-back-anchor />
-      <header-container
-        title="Sign up here !"
-        subtitle="Fill in the fields below to make the initial registration on the platform" />
-      <div class="mt-8 space-y-6">
+
+      <div class="mt-10 space-y-6">
         <base-form :template="template">
           <template #action="{ callback }">
             <base-button @click="submit(callback)" :loading="loading">
@@ -39,8 +40,12 @@ import BaseButton from '@components/buttons/BaseButton.vue';
 import { ref } from 'vue';
 import { UserPlusIcon } from '@heroicons/vue/24/outline';
 import { AuthService } from '@services/AuthService';
+import Toast from '@utils/toast';
+import { useRouter } from 'vue-router';
 
+const toast = new Toast({ position: 'top-center', timer: 6000 });
 const authService = new AuthService();
+const router = useRouter();
 const loading = ref(false);
 
 const template: IBaseFormItem[] = [
@@ -100,10 +105,20 @@ const submit = async (callback: ICallback) => {
         passwordConfirmation: String(confirmation),
       })
       .then((data) => {
-        //
+        toast.fire({
+          title: 'Successfully saved!',
+          text: 'You will shortly receive an email containing an account activation link, check your email box.',
+          icon: 'success',
+        });
+
+        router.push({ name: 'AuthSignIn' });
       })
       .catch((err) => {
-        //
+        toast.fire({
+          title: 'We have a problem :/',
+          text: 'There was some internal error, please try again or contact support.',
+          icon: 'error',
+        });
       })
       .finally(() => {
         loading.value = false;

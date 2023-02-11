@@ -1,10 +1,10 @@
 <template>
-  <div class="header-container">
-    <code-bracket-icon class="mx-auto h-12 w-auto" />
-    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+  <div class="mt-14 flex flex-col items-center">
+    <code-bracket-icon class="mx-auto h-12 w-auto text-cyan-600" />
+    <h2 class="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900">
       {{ props.title }}
     </h2>
-    <p class="mt-2 text-center text-sm text-gray-600 px-6">
+    <p class="mt-2 text-center text-sm text-gray-600 max-w-xs">
       <template v-if="props.subtitle">
         {{ props.subtitle }}
       </template>

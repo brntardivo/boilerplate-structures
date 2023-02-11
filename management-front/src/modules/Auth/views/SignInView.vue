@@ -1,18 +1,18 @@
 <template>
   <div class="sign-in-view">
+    <header-container title="Sign in to your account">
+      <template #subtitle>
+        Or
+        {{ ' ' }}
+        <router-link
+          :to="{ name: 'AuthSignUp' }"
+          class="font-medium text-cyan-600 hover:text-cyan-500"
+          >sign up here</router-link
+        >
+      </template>
+    </header-container>
     <content-container>
-      <header-container title="Sign in to your account">
-        <template #subtitle>
-          Or
-          {{ ' ' }}
-          <router-link
-            :to="{ name: 'AuthSignUp' }"
-            class="font-medium text-cyan-600 hover:text-cyan-500"
-            >sign up here</router-link
-          >
-        </template>
-      </header-container>
-      <div class="mt-8 space-y-6">
+      <div class="space-y-6">
         <base-form :template="template">
           <template #forgot-password>
             <div class="text-sm text-end">
@@ -49,10 +49,13 @@ import { AuthService } from '@services/AuthService';
 import { useRouter } from 'vue-router';
 import ContentContainer from '../components/ContentContainer.vue';
 import HeaderContainer from '../components/HeaderContainer.vue';
+import Toast from '@utils/toast';
+import { AxiosError } from 'axios';
 
 const router = useRouter();
 const authService = new AuthService();
 const store = useAuthStore();
+const toast = new Toast({ position: 'top-center', timer: 6000 });
 const remember = store.getRememberState;
 const loading = ref(false);
 
@@ -112,6 +115,13 @@ const submit = async (callback: ICallback) => {
     await authService
       .signIn({ email: String(email), password: String(password) })
       .then((data) => {
+        toast.fire({
+          title: 'Welcome!',
+          text: 'Successfully logged in.',
+          icon: 'success',
+          timer: 4000,
+        });
+
         let rememberObject = {
           enabled: false,
           email: '',
@@ -133,7 +143,23 @@ const submit = async (callback: ICallback) => {
         router.push({ name: 'Home' });
       })
       .catch((err) => {
-        console.log(err);
+        let errMessage = 'There was some internal error, please contact support.';
+
+        if (err instanceof AxiosError) {
+          const { response } = err;
+
+          if (response && response.status) {
+            if (response.status == 401) {
+              errMessage = `Incorrect email and/or password, if you don&lsquo;t remember your password, you can recover it.`;
+            }
+          }
+        }
+
+        toast.fire({
+          title: 'We have a problem :/',
+          text: errMessage,
+          icon: 'error',
+        });
       })
       .finally(() => {
         loading.value = false;

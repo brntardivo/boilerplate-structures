@@ -1,145 +1,78 @@
+interface IFirePayload {
+  text: string;
+  title?: string;
+  timer?: number;
+  position?: string;
+  icon?: string;
+}
+
+interface IConfiguratorParam {
+  enableTitle?: boolean;
+  timer?: number;
+  position?: string;
+  enableClose?: boolean;
+}
+
+interface IToast {
+  configurator: IConfiguratorParam;
+  container: HTMLElement | null;
+  fire: (props: IFirePayload | string) => Promise<void>;
+}
+
 const generateUniqueID = () => {
   return `toast-${Date.now()}`;
 };
 
-const removeToast = (uniqueId, container) => {
+const removeToast = async (uniqueId: string, container: HTMLElement) => {
   const toast = document.getElementById(uniqueId);
 
   if (toast && container) {
     toast.classList.remove('show');
-    toast.classList.add('hide');
 
-    container.removeChild(toast);
+    setTimeout(() => {
+      container.removeChild(toast);
+    }, 200);
   }
 };
 
-const makeContainer = (options) => {
-  const configurator = {
-    enableTitle: false,
-    timer: null,
-    color: 'light',
-    position: 'top-right',
-    enableClose: true,
-    ...options,
-  };
+export default class Toast implements IToast {
+  configurator;
+  container;
 
-  const containerId = 'toast-container';
+  constructor(props: IConfiguratorParam | void) {
+    this.configurator = {
+      enableTitle: false,
+      timer: NaN,
+      position: 'top-right',
+      enableClose: true,
+      icon: '',
+      ...props,
+    };
+    const containerId = 'toast-container';
+    this.container = document.getElementById(containerId);
 
-  let container = document.getElementById(containerId);
+    if (!this.container) {
+      const e = document.createElement('div');
+      e.id = containerId;
 
-  if (!container) {
-    const e = document.createElement('div');
-    e.id = containerId;
+      e.classList.add(`toast-position-${this.configurator.position}`);
 
-    e.classList.add(`toast-position-${configurator.position}`);
+      document.body.prepend(e);
 
-    document.body.prepend(e);
-
-    container = document.getElementById(containerId);
+      this.container = document.getElementById(containerId);
+    }
   }
 
-  const fire = (payload) => {
+  async fire(payload: IFirePayload | string) {
     if (typeof payload === 'string') {
       payload = {
         text: payload,
       };
     }
 
-    const uniqueId = generateUniqueID();
-
-    const toast = document.createElement('div');
-
-    toast.id = uniqueId;
-    toast.setAttribute('role', 'alert');
-    toast.classList.add('toast');
-    toast.classList.add('fade');
-    toast.classList.add('show');
-
-    toast.classList.add(`bg-${payload.color ?? configurator.color}`);
-
-    switch (payload.color ?? configurator.color) {
-      case 'primary':
-      case 'dark':
-      case 'info':
-      case 'danger':
-      case 'success':
-      case 'secondary':
-        toast.classList.add('text-white');
-        break;
-      case 'light':
-      case 'warning':
-        toast.classList.add('text-dark');
-        break;
+    if (!this.container) {
+      throw new Error('[toast][error] container not found');
     }
-
-    if (configurator.enableTitle) {
-      const title = document.createElement('div');
-      title.classList.add('toast-header');
-
-      const span = document.createElement('span');
-      span.innerHTML = payload.title ?? '';
-
-      title.append(span);
-
-      if (configurator.enableClose) {
-        const btn = document.createElement('button');
-        btn.classList.add('btn-close');
-        btn.setAttribute('aria-label', 'Close');
-        btn.dataset.id = uniqueId;
-
-        btn.addEventListener('click', (e) => {
-          toast.classList.remove('show');
-          toast.classList.add('hide');
-
-          container.removeChild(toast);
-        });
-
-        title.append(btn);
-      }
-
-      toast.append(title);
-    }
-
-    const text = document.createElement('div');
-    text.classList.add('toast-body');
-    text.innerHTML = payload.text ?? '';
-
-    toast.append(text);
-
-    if (!configurator.enableTitle && configurator.enableClose) {
-      const btn = document.createElement('button');
-      btn.classList.add('btn-close');
-      btn.classList.add('me-2');
-      btn.classList.add('m-auto');
-      btn.setAttribute('aria-label', 'Close');
-      btn.dataset.id = uniqueId;
-
-      btn.addEventListener('click', (e) => {
-        toast.classList.remove('show');
-        toast.classList.add('hide');
-
-        container.removeChild(toast);
-      });
-
-      switch (payload.color ?? configurator.color) {
-        case 'primary':
-        case 'dark':
-        case 'info':
-        case 'danger':
-        case 'success':
-        case 'secondary':
-          btn.classList.add('btn-close-white');
-          break;
-        case 'light':
-        case 'warning':
-          btn.classList.add('btn-close-dark');
-          break;
-      }
-
-      toast.append(btn);
-    }
-
-    container.prepend(toast);
 
     if (payload.position) {
       const position = payload.position.toString().toLowerCase();
@@ -154,57 +87,76 @@ const makeContainer = (options) => {
       ];
 
       if (allowedPositions.indexOf(position) > -1) {
-        container.classList.remove(`toast-position-${configurator.position}`);
-        container.classList.add(`toast-position-${position}`);
+        this.container.classList.remove(`toast-position-${this.configurator.position}`);
+        this.container.classList.add(`toast-position-${position}`);
       } else {
-        console.error('[toast][error] invalid position');
+        throw new Error('[toast][error] invalid position');
       }
     }
 
-    if (payload.timer || configurator.timer) {
-      setTimeout(() => {
-        removeToast(uniqueId, container);
-      }, payload.timer ?? configurator.timer);
+    const uniqueId = generateUniqueID();
+
+    const toast = document.createElement('div');
+
+    toast.id = uniqueId;
+    toast.setAttribute('role', 'alert');
+    toast.classList.add('toast');
+    toast.classList.add('fade');
+
+    if (payload.icon) {
+      const icon = document.createElement('img');
+      icon.classList.add('toast-icon-container');
+      icon.src = (await import(`@assets/images/${payload.icon}_icon.svg`)).default;
+      toast.append(icon);
+
+      toast.classList.add('toast-icon');
     }
-  };
 
-  const success = (text, timer, position = null) => {
-    return fire({
-      text,
-      color: 'success',
-      timer,
-      position,
-    });
-  };
+    if (this.configurator.enableTitle || payload.title) {
+      const title = document.createElement('div');
+      title.classList.add('toast-header');
 
-  const error = (text, timer, position = null) => {
-    return fire({
-      text,
-      color: 'danger',
-      timer,
-      position,
-    });
-  };
+      const span = document.createElement('span');
+      span.innerHTML = payload.title ?? '';
 
-  return { fire, success, error };
-};
+      title.append(span);
 
-export default {
-  install: (app, options) => {
-    const { fire, success, error } = makeContainer(options);
+      toast.append(title);
+    }
 
-    app.config.globalProperties.$toast = {
-      fire,
-      success,
-      error,
-    };
-  },
-};
+    const text = document.createElement('div');
+    text.classList.add('toast-body');
+    text.innerHTML = payload.text ?? '';
 
-const { fire, success, error } = makeContainer({});
+    toast.append(text);
 
-export const standalone = {
-  fire,
-  success,
-  error,
-};
+    if (!this.configurator.enableTitle && this.configurator.enableClose) {
+      const btn = document.createElement('button');
+      btn.classList.add('btn-close');
+      btn.setAttribute('aria-label', 'Close');
+      btn.dataset.id = uniqueId;
+
+      btn.addEventListener('click', () => {
+        if (this.container) {
+          removeToast(uniqueId, this.container);
+        }
+      });
+
+      toast.append(btn);
+    }
+
+    this.container.prepend(toast);
+
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 100);
+
+    if (payload.timer || this.configurator.timer) {
+      setTimeout(() => {
+        if (this.container) {
+          removeToast(uniqueId, this.container);
+        }
+      }, payload.timer ?? this.configurator.timer);
+    }
+  }
+}
