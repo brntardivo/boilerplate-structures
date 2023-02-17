@@ -12,12 +12,12 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  @apply transition-opacity ease-in-out delay-150;
+  @apply transition-opacity ease-in-out delay-100;
 }
 
 .fast-fade-enter-active,
 .fast-fade-leave-active {
-  @apply transition-opacity ease-in-out delay-75;
+  @apply transition-opacity ease-in-out delay-[50ms];
 }
 
 .fade-enter-from,
