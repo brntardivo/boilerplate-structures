@@ -2,7 +2,7 @@
   <div class="base-button">
     <button
       type="button"
-      class="group relative flex min-h-[38px] w-full justify-center rounded-md border border-transparent bg-gradient-to-r from-cyan-700 to-cyan-500 py-2 px-4 text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+      class="group relative flex min-h-[38px] w-full justify-center rounded-md border border-transparent bg-gradient-to-r from-cyan-800 to-cyan-600 py-2 px-4 text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
       :class="{
         'opacity-50': disabled || loading,
       }"
