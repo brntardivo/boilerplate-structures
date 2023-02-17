@@ -1,14 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { useAuthStore } from '@stores/auth';
 import { authRoutes } from '@modules/Auth/routes';
 import { homeRoutes } from '@modules/Home/routes';
-import { useAuthStore } from '@stores/auth';
+import { usersRoutes } from '@modules/Users/routes';
 
 const appTitle = import.meta.env.VITE_APP_TITLE;
 
 const defaultRoute = 'Home';
 const signInRoute = 'AuthSignIn';
 
-const routes = [
+export const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
     redirect: {
@@ -16,6 +17,7 @@ const routes = [
     },
   },
   ...homeRoutes,
+  ...usersRoutes,
   ...authRoutes,
 ];
 

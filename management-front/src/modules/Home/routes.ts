@@ -11,6 +11,8 @@ export const homeRoutes = [
         component: () => import('@modules/Home/views/HomeView.vue'),
         meta: {
           authenticated: true,
+          showOnNavbar: true,
+          navbarLabel: 'Home',
           title: 'Home',
           layout: InternalLayout,
         },
