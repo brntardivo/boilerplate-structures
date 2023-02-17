@@ -1,7 +1,7 @@
 <template>
   <div class="relative min-h-full bg-zinc-100">
     <InternalNavigationBar />
-    <main class="mx-8 -mt-56">
+    <main class="mx-8">
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
           <Component :is="Component" />

@@ -1,19 +1,19 @@
 <template>
-  <div class="w-full h-96 bg-gradient-to-b from-cyan-700 to-zinc-100">
-    <nav class="mx-8 border-b-cyan-500 border-b-[.5px]">
+  <div class="w-full">
+    <nav class="px-8 bg-gradient-to-r from-cyan-600 to-cyan-800">
       <div class="flex flex-col items-center">
         <div class="flex items-center justify-between w-full h-16">
           <div class="flex-shrink-0 mr-8">
             <CodeBracketIcon class="mx-auto h-12 w-auto text-cyan-100" />
           </div>
-          <div class="flex w-full items-center space-x-2">
+          <div class="w-full items-center space-x-2 hidden md:flex">
             <template v-if="navItems.length">
               <div v-for="(navItem, navIndex) in navItems" :key="navIndex">
                 <RouterLink
-                  :to="{ name: navItem.routeName }"
-                  class="py-2 px-4 font-medium text-sm transition-all delay-100"
+                  :to="{ name: navItem.route }"
+                  class="py-2 px-4 font-medium text-sm transition-all delay-100 rounded-md hover:text-white"
                   :class="{
-                    'text-white bg-gray-900/40 rounded-md': navItem.active,
+                    'text-white bg-cyan-900/60': navItem.active,
                     'text-cyan-100': !navItem.active,
                   }"
                   >{{ navItem.label }}</RouterLink
@@ -21,7 +21,7 @@
               </div>
             </template>
           </div>
-          <div class="flex items-center">
+          <div class="hidden md:flex items-center">
             <a href="#" class="decoration-inherit mr-4">
               <BellIcon class="h-6 w-6 text-cyan-100 hover:text-white transition-all delay-100" />
             </a>
@@ -35,13 +35,106 @@
               </template>
             </BaseDropdownButton>
           </div>
+          <div class="flex md:hidden">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-md bg-cyan-900/60 p-2 text-white hover:bg-cyan-900/40 focus:outline-none focus:ring-2 focus:ring-cyan-100 focus:ring-offset-2 focus:ring-offset-cyan-800 transition-all delay-100"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              @click="menuOpened = !menuOpened">
+              <span class="sr-only">Open main menu</span>
+              <Transition name="fast-fade" mode="out-in">
+                <component
+                  :is="menuOpened ? XMarkIcon : Bars3Icon"
+                  :key="menuOpened"
+                  class="text-white w-5 h-5" />
+              </Transition>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:hidden overflow-hidden transition-all delay-100"
+        :class="{
+          'h-auto': menuOpened,
+          'h-0': !menuOpened,
+        }"
+        id="mobile-menu">
+        <div class="border-t-[.5px] border-cyan-500/60 py-4">
+          <div class="space-y-1 p-2 rounded-lg">
+            <template v-if="navItems.length">
+              <div class="flex" v-for="(navItem, navIndex) in navItems" :key="navIndex">
+                <RouterLink
+                  :to="{ name: navItem.route }"
+                  class="w-full py-2 px-4 mb-1 font-medium text-base transition-all delay-100 rounded-md hover:text-white"
+                  :class="{
+                    'text-white bg-cyan-900/60': navItem.active,
+                    'text-cyan-100': !navItem.active,
+                  }"
+                  >{{ navItem.label }}</RouterLink
+                >
+              </div>
+            </template>
+            <div class="border-t-[.5px] border-cyan-500/60">
+              <div class="flex flex-row items-center my-4 px-4 py-2 bg-cyan-900/60 rounded-lg">
+                <div class="flex-grow">
+                  <div class="flex flex-row items-center">
+                    <div class="flex-shrink pr-3">
+                      <div
+                        class="w-9 h-9 relative rounded-full border-[.5px] border-cyan-100 bg-cyan-600 hover:border-white transition-all delay-100 shadow-sm">
+                        <div
+                          class="absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-[1px] border-cyan-200 shadow"></div>
+                      </div>
+                    </div>
+                    <div class="flex-grow">
+                      <h4 class="text-white font-medium">{{ userName }}</h4>
+                      <p class="text-white text-sm font-light">{{ userEmail }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-shrink">
+                  <a href="#" class="decoration-inherit flex items-center rounded-lg">
+                    <BellIcon
+                      class="h-6 w-6 text-cyan-100 hover:text-white transition-all delay-100" />
+                  </a>
+                </div>
+              </div>
+              <template v-if="userDropdownMenu.length">
+                <div
+                  class="flex"
+                  v-for="(userDropdownItem, userDropdownIndex) in userDropdownMenu"
+                  :key="userDropdownIndex">
+                  <template v-if="userDropdownItem.type == 'click'">
+                    <a
+                      href="#"
+                      @click="userDropdownItem.click"
+                      class="w-full py-2 px-4 mb-1 font-medium text-base transition-all delay-100 text-cyan-100 hover:text-white"
+                      >{{ userDropdownItem.label }}</a
+                    >
+                  </template>
+                  <template v-else-if="userDropdownItem.type == 'router-link'">
+                    <RouterLink
+                      :to="{ name: userDropdownItem.route }"
+                      class="w-full py-2 px-4 mb-1 font-medium text-base transition-all rounded-md delay-100 hover:text-white"
+                      :class="{
+                        'text-white bg-gray-900/40 ': userDropdownItem.active,
+                        'text-cyan-100': !userDropdownItem.active,
+                      }"
+                      >{{ userDropdownItem.label }}</RouterLink
+                    >
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
-    <div class="mx-8 pt-10">
+
+    <div class="mx-8 py-5">
       <template v-if="currentTitle">
         <Transition name="fade" mode="out-in">
-          <h1 class="font-medium text-[2rem] text-white" :key="currentTitle">
+          <h1 class="font-bold text-[2rem]" :key="currentTitle">
             {{ currentTitle }}
           </h1>
         </Transition>
@@ -57,24 +150,28 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { CodeBracketIcon, BellIcon } from '@heroicons/vue/24/outline';
+import { CodeBracketIcon, BellIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import BaseDropdownButton, { IDropdownList } from '@components/buttons/BaseDropdownButton.vue';
 import { useAuthStore } from '@stores/auth';
 import { RouteRecordName, useRouter, useRoute } from 'vue-router';
 import { routes } from '@src/router';
 import Toast from '@utils/toast';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 interface INavItem {
   label: string;
   active: boolean;
-  routeName: RouteRecordName;
+  route: RouteRecordName;
 }
 
 const store = useAuthStore();
 const router = useRouter();
 const routeData = useRoute();
 const currentTitle = computed(() => routeData.meta.title);
+const menuOpened = ref(false);
+
+const userName = store.getUserState.name;
+const userEmail = store.getUserState.email;
 
 const toast = new Toast({
   position: 'top-center',
@@ -114,7 +211,7 @@ const navItems = computed(() => {
             parsedRoutes.push({
               label: children.meta?.navbarLabel || String(children.name),
               active: currentRoute == children.name,
-              routeName: children.name,
+              route: children.name,
             });
           }
         }
