@@ -4,16 +4,24 @@ import path from "path";
 
 const register = (app: Express): void => {
   try {
-    const basePath: string = path.join(__dirname, "modules");
+    const basePath = path.join(__dirname, "domains");
 
-    const modules: string[] = fs.readdirSync(basePath);
-    for (const mod of modules) {
-      const routerFile = path.join(basePath, mod, "routes.ts");
+    const domains = fs.readdirSync(basePath);
 
-      if (routerFile && fs.existsSync(routerFile)) {
-        import(routerFile).then((routes) => {
-          app.use(routes.prefix, routes.router);
-        });
+    for (const domain of domains) {
+      const domainPath = path.join(basePath, domain);
+      const modules = fs.readdirSync(domainPath);
+
+      for (const mod of modules) {
+        const routerFile = path.join(domainPath, mod, "routes.ts");
+
+        if (routerFile && fs.existsSync(routerFile)) {
+          const prefix = `/${domain}/${mod}`;
+
+          import(routerFile).then((routes) => {
+            app.use(prefix, routes.router);
+          });
+        }
       }
     }
   } catch (err) {

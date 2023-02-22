@@ -1,7 +1,7 @@
 import { UserEntity } from "@entities/UserEntity";
 import { IUsersRepository } from "@repositories/IUsersRepository";
 import { IMailDeliveryProvider } from "@providers/IMailDeliveryProvider";
-import { ISignUpDTO } from "@modules/auth/signUp/ISignUpDTO";
+import { ISignUpDTO } from "@domains/client/auth/signUp/ISignUpDTO";
 import { badRequest, unprocessableEntity } from "@utils/errors";
 import { ITokensRepository } from "@repositories/ITokensRepository";
 import { TokenEntity } from "@entities/TokenEntity";

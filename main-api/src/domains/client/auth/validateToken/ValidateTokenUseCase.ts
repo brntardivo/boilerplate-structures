@@ -1,4 +1,4 @@
-import { IValidateTokenDTO } from "@modules/auth/validateToken/IValidateTokenDTO";
+import { IValidateTokenDTO } from "@domains/client/auth/validateToken/IValidateTokenDTO";
 import { IUsersRepository } from "@repositories/IUsersRepository";
 import { ITokensRepository } from "@repositories/ITokensRepository";
 import { badRequest, unprocessableEntity } from "@utils/errors";

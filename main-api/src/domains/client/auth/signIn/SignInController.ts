@@ -1,20 +1,19 @@
-import { SignUpUseCase } from "@modules/auth/signUp/SignUpUseCase";
+import { SignInUseCase } from "@domains/client/auth/signIn/SignInUseCase";
 import { Request, Response } from "express";
 
-export class SignUpController {
-  constructor(private signUpUseCase: SignUpUseCase) {}
+export class SignInController {
+  constructor(private signInUseCase: SignInUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-      const data = await this.signUpUseCase.execute({
-        name,
+      const data = await this.signInUseCase.execute({
         email,
         password,
       });
 
-      return res.status(201).json({
+      return res.status(200).json({
         ...data,
       });
     } catch (err: any) {

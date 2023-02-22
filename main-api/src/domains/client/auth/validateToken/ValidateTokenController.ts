@@ -1,4 +1,4 @@
-import { ValidateTokenUseCase } from "@modules/auth/validateToken/ValidateTokenUseCase";
+import { ValidateTokenUseCase } from "@domains/client/auth/validateToken/ValidateTokenUseCase";
 import { Request, Response } from "express";
 
 export class ValidateTokenController {

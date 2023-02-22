@@ -1,17 +1,12 @@
-import { SignInUseCase } from "@modules/auth/signIn/SignInUseCase";
+import { AllAdminsUseCase } from "@domains/management/admins/allAdmins/AllAdminsUseCase";
 import { Request, Response } from "express";
 
-export class SignInController {
-  constructor(private signInUseCase: SignInUseCase) {}
+export class AllAdminsController {
+  constructor(private allAdminsUseCase: AllAdminsUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
-
     try {
-      const data = await this.signInUseCase.execute({
-        email,
-        password,
-      });
+      const data = await this.allAdminsUseCase.execute(req.body);
 
       return res.status(200).json({
         ...data,

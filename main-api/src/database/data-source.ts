@@ -3,6 +3,7 @@ import { TokenModel } from "@database/models/TokenModel";
 import { UserModel } from "@database/models/UserModel";
 import { UserWorkspaceModel } from "@database/models/UserWorkspaceModel";
 import { WorkspaceModel } from "@database/models/WorkspaceModel";
+import { AdminModel } from "@database/models/AdminModel";
 import {
   DB_TYPE,
   DB_HOST,
@@ -28,5 +29,6 @@ export const AppDataSource = new DataSource({
     UserModel,
     UserWorkspaceModel,
     WorkspaceModel,
+    AdminModel,
   ],
 });
