@@ -16,6 +16,7 @@
     "experimentalDecorators": true,
     "typeRoots": ["src/types", "node_modules/@types"],
     "paths": {
+      "@domains/*": ["./src/domains/*"],
       "@database/*": ["./src/database/*"],
       "@entities/*": ["src/entities/*"],
       "@middlewares/*": ["./src/middlewares/*"],
