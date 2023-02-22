@@ -1,26 +1,26 @@
 import InternalLayout from '@components/layouts/InternalLayout.vue';
 
-export const usersRoutes = [
+export const adminsRoutes = [
   {
-    path: '/users',
+    path: '/admins',
     component: () => import('@components/layouts/ClearLayout.vue'),
     children: [
       {
-        name: 'Users',
+        name: 'Admins',
         path: '',
-        component: () => import('@modules/Users/views/UsersView.vue'),
+        component: () => import('@modules/Admins/views/AdminsView.vue'),
         meta: {
           authenticated: true,
           showOnNavbar: true,
-          navbarLabel: 'Users',
-          title: 'Users',
+          navbarLabel: 'Admins',
+          title: 'Admins',
           layout: InternalLayout,
         },
       },
       {
         path: '',
         redirect: {
-          name: 'Users',
+          name: 'Admins',
         },
       },
     ],

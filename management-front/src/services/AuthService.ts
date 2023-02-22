@@ -1,5 +1,5 @@
 import { ApiService } from '@services/ApiService';
-import { IUser } from '@interfaces/IUser';
+import { IAdmin } from '@interfaces/IAdmin';
 
 interface ISignInPayload {
   email: string;
@@ -8,7 +8,7 @@ interface ISignInPayload {
 
 interface ISignInResponse {
   _id: string;
-  user: IUser;
+  user: IAdmin;
   token: string;
 }
 

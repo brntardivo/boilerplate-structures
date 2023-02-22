@@ -36,7 +36,7 @@
                     :class="`${
                       item.overrideInputClass
                         ? ''
-                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm'
+                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
                     } ${item.inputClass ?? ''} ${
                       v$.form[item.model].$error
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -60,7 +60,7 @@
                     :class="`${
                       item.overrideInputClass
                         ? ''
-                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm'
+                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
                     } ${item.inputClass ?? ''} ${
                       v$.form[item.model].$error
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -83,7 +83,7 @@
                   :class="`${
                     item.overrideInputClass
                       ? ''
-                      : 'mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm'
+                      : 'mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm'
                   } ${item.inputClass} ${
                     v$.form[item.model].$error
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -109,7 +109,7 @@
                   :class="`${
                     item.overrideInputClass
                       ? ''
-                      : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm'
+                      : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
                   } ${item.inputClass ?? ''} ${
                     v$.form[item.model].$error
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -131,7 +131,7 @@
                     :class="`${
                       item.overrideInputClass
                         ? ''
-                        : 'h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500'
+                        : 'h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500'
                     } ${item.inputClass ?? ''} ${
                       v$.form[item.model].$error
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -172,7 +172,7 @@
                     :class="`${
                       item.overrideInputClass
                         ? ''
-                        : 'h-4 w-4 border-gray-300 text-cyan-600 focus:ring-cyan-500'
+                        : 'h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-500'
                     }`"
                     v-model="v$.form[item.model].$model"
                     :value="option.value"

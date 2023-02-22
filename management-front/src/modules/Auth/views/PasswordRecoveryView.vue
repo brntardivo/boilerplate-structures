@@ -11,7 +11,7 @@
             <base-button @click="submit(callback)" :loading="loading">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <paper-airplane-icon
-                  class="h-5 w-5 text-cyan-500 group-hover:text-cyan-400"
+                  class="h-5 w-5 text-gray-500 group-hover:text-gray-400"
                   aria-hidden="true" />
               </span>
               Send email

@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('auth', {
       return state.user;
     },
     getJWTState: (state) => {
-      return state.jwt;
+      return state.jwt || null;
     },
   },
   actions: {

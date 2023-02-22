@@ -15,15 +15,6 @@ export const authRoutes = [
         },
       },
       {
-        name: 'AuthSignUp',
-        path: 'sign-up',
-        component: () => import('@modules/Auth/views/SignUpView.vue'),
-        meta: {
-          title: 'Sign Up',
-          layout: ExternalLayout,
-        },
-      },
-      {
         name: 'AuthPasswordRecovery',
         path: 'password-recovery',
         component: () => import('@modules/Auth/views/PasswordRecoveryView.vue'),

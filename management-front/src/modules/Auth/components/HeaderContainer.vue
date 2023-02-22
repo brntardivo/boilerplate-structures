@@ -1,6 +1,6 @@
 <template>
   <div class="mt-14 flex flex-col items-center">
-    <code-bracket-icon class="mx-auto h-12 w-auto text-cyan-600" />
+    <code-bracket-icon class="mx-auto h-12 w-auto text-gray-600" />
     <h2 class="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900">
       {{ props.title }}
     </h2>

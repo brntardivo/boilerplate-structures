@@ -1,10 +1,10 @@
 <template>
   <div class="w-full">
-    <nav class="px-8 bg-gradient-to-r from-cyan-600 to-cyan-800">
+    <nav class="px-8 bg-gradient-to-r from-gray-600 to-gray-800 mb-8">
       <div class="flex flex-col items-center">
         <div class="flex items-center justify-between w-full h-16">
           <div class="flex-shrink-0 mr-8">
-            <CodeBracketIcon class="mx-auto h-12 w-auto text-cyan-100" />
+            <CodeBracketIcon class="mx-auto h-12 w-auto text-gray-100" />
           </div>
           <div class="w-full items-center space-x-2 hidden md:flex">
             <template v-if="navItems.length">
@@ -13,8 +13,8 @@
                   :to="{ name: navItem.route }"
                   class="py-2 px-4 font-medium text-sm transition-all delay-100 rounded-md hover:text-white"
                   :class="{
-                    'text-white bg-cyan-900/60': navItem.active,
-                    'text-cyan-100': !navItem.active,
+                    'text-white bg-gray-900/60': navItem.active,
+                    'text-gray-100': !navItem.active,
                   }"
                   >{{ navItem.label }}</RouterLink
                 >
@@ -23,14 +23,14 @@
           </div>
           <div class="hidden md:flex items-center">
             <a href="#" class="decoration-inherit mr-4">
-              <BellIcon class="h-6 w-6 text-cyan-100 hover:text-white transition-all delay-100" />
+              <BellIcon class="h-6 w-6 text-gray-100 hover:text-white transition-all delay-100" />
             </a>
             <BaseDropdownButton type="list" :list="userDropdownMenu">
               <template #element>
                 <div
-                  class="w-9 h-9 relative rounded-full border-[.5px] border-cyan-100 bg-cyan-600 hover:border-white transition-all delay-100 shadow-sm">
+                  class="w-9 h-9 relative rounded-full border-[.5px] border-gray-100 bg-gray-600 hover:border-white transition-all delay-100 shadow-sm">
                   <div
-                    class="absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-[1px] border-cyan-200 shadow"></div>
+                    class="absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-[1px] border-gray-200 shadow"></div>
                 </div>
               </template>
             </BaseDropdownButton>
@@ -38,7 +38,7 @@
           <div class="flex md:hidden">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-cyan-900/60 p-2 text-white hover:bg-cyan-900/40 focus:outline-none focus:ring-2 focus:ring-cyan-100 focus:ring-offset-2 focus:ring-offset-cyan-800 transition-all delay-100"
+              class="inline-flex items-center justify-center rounded-md bg-gray-900/60 p-2 text-white hover:bg-gray-900/40 focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all delay-100"
               aria-controls="mobile-menu"
               aria-expanded="false"
               @click="menuOpened = !menuOpened">
@@ -60,7 +60,7 @@
           'h-0': !menuOpened,
         }"
         id="mobile-menu">
-        <div class="border-t-[.5px] border-cyan-500/60 py-4">
+        <div class="border-t-[.5px] border-gray-500/60 py-4">
           <div class="space-y-1 p-2 rounded-lg">
             <template v-if="navItems.length">
               <div class="flex" v-for="(navItem, navIndex) in navItems" :key="navIndex">
@@ -68,22 +68,22 @@
                   :to="{ name: navItem.route }"
                   class="w-full py-2 px-4 mb-1 font-medium text-base transition-all delay-100 rounded-md hover:text-white"
                   :class="{
-                    'text-white bg-cyan-900/60': navItem.active,
-                    'text-cyan-100': !navItem.active,
+                    'text-white bg-gray-900/60': navItem.active,
+                    'text-gray-100': !navItem.active,
                   }"
                   >{{ navItem.label }}</RouterLink
                 >
               </div>
             </template>
-            <div class="border-t-[.5px] border-cyan-500/60">
-              <div class="flex flex-row items-center my-4 px-4 py-2 bg-cyan-900/60 rounded-lg">
+            <div class="border-t-[.5px] border-gray-500/60">
+              <div class="flex flex-row items-center my-4 px-4 py-2 bg-gray-900/60 rounded-lg">
                 <div class="flex-grow">
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pr-3">
                       <div
-                        class="w-9 h-9 relative rounded-full border-[.5px] border-cyan-100 bg-cyan-600 hover:border-white transition-all delay-100 shadow-sm">
+                        class="w-9 h-9 relative rounded-full border-[.5px] border-gray-100 bg-gray-600 hover:border-white transition-all delay-100 shadow-sm">
                         <div
-                          class="absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-[1px] border-cyan-200 shadow"></div>
+                          class="absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-[1px] border-gray-200 shadow"></div>
                       </div>
                     </div>
                     <div class="flex-grow">
@@ -95,7 +95,7 @@
                 <div class="flex-shrink">
                   <a href="#" class="decoration-inherit flex items-center rounded-lg">
                     <BellIcon
-                      class="h-6 w-6 text-cyan-100 hover:text-white transition-all delay-100" />
+                      class="h-6 w-6 text-gray-100 hover:text-white transition-all delay-100" />
                   </a>
                 </div>
               </div>
@@ -108,7 +108,7 @@
                     <a
                       href="#"
                       @click="userDropdownItem.click"
-                      class="w-full py-2 px-4 mb-1 font-medium text-base transition-all delay-100 text-cyan-100 hover:text-white"
+                      class="w-full py-2 px-4 mb-1 font-medium text-base transition-all delay-100 text-gray-100 hover:text-white"
                       >{{ userDropdownItem.label }}</a
                     >
                   </template>
@@ -118,7 +118,7 @@
                       class="w-full py-2 px-4 mb-1 font-medium text-base transition-all rounded-md delay-100 hover:text-white"
                       :class="{
                         'text-white bg-gray-900/40 ': userDropdownItem.active,
-                        'text-cyan-100': !userDropdownItem.active,
+                        'text-gray-100': !userDropdownItem.active,
                       }"
                       >{{ userDropdownItem.label }}</RouterLink
                     >
@@ -130,16 +130,6 @@
         </div>
       </div>
     </nav>
-
-    <div class="mx-8 py-5">
-      <template v-if="currentTitle">
-        <Transition name="fade" mode="out-in">
-          <h1 class="font-bold text-[2rem]" :key="currentTitle">
-            {{ currentTitle }}
-          </h1>
-        </Transition>
-      </template>
-    </div>
   </div>
 </template>
 

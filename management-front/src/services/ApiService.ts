@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import { isEmpty } from 'lodash';
-
+import { useAuthStore } from '@stores/auth';
 interface IDynamicObject {
   [key: string]: string;
 }
@@ -36,8 +36,10 @@ export class ApiService<T> implements IApiService<T> {
   token?: string | null;
   fetch: AxiosInstance;
 
-  constructor(token: string | null = null) {
-    this.token = token;
+  constructor() {
+    const store = useAuthStore();
+
+    this.token = store.getJWTState;
     this.fetch = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
     });

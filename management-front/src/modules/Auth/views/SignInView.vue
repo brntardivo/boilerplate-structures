@@ -1,16 +1,6 @@
 <template>
   <div class="sign-in-view">
-    <header-container title="Sign in to your account">
-      <template #subtitle>
-        Or
-        {{ ' ' }}
-        <router-link
-          :to="{ name: 'AuthSignUp' }"
-          class="font-medium text-cyan-600 hover:text-cyan-500"
-          >sign up here</router-link
-        >
-      </template>
-    </header-container>
+    <header-container title="Sign in to your account"> </header-container>
     <content-container>
       <div class="space-y-6">
         <base-form :template="template">
@@ -18,7 +8,7 @@
             <div class="text-sm text-end">
               <router-link
                 :to="{ name: 'AuthPasswordRecovery' }"
-                class="font-medium text-cyan-600 hover:text-cyan-500">
+                class="font-medium text-gray-600 hover:text-gray-500">
                 Forgot your password?
               </router-link>
             </div>
@@ -27,7 +17,7 @@
             <base-button @click="submit(callback)" :loading="loading">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <lock-closed-icon
-                  class="h-5 w-5 text-cyan-500 group-hover:text-cyan-400"
+                  class="h-5 w-5 text-gray-500 group-hover:text-gray-400"
                   aria-hidden="true" />
               </span>
               Sign In

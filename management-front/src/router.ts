@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { useAuthStore } from '@stores/auth';
 import { authRoutes } from '@modules/Auth/routes';
 import { homeRoutes } from '@modules/Home/routes';
-import { usersRoutes } from '@modules/Users/routes';
+import { adminsRoutes } from '@modules/Admins/routes';
 
 const appTitle = import.meta.env.VITE_APP_TITLE;
 
@@ -17,7 +17,7 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   ...homeRoutes,
-  ...usersRoutes,
+  ...adminsRoutes,
   ...authRoutes,
 ];
 
