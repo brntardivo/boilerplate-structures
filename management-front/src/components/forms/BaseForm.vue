@@ -19,7 +19,7 @@
                 "
                 :for="`input-${itemIndex}`"
                 :class="`${
-                  !item.overrideLabelClass ? 'block text-sm font-medium text-gray-700' : ''
+                  !item.overrideLabelClass ? 'block text-sm font-medium text-slate-200' : ''
                 } ${item.labelClass ?? ''}`">
                 <span v-html="item.label"></span>
                 <span
@@ -36,7 +36,7 @@
                     :class="`${
                       item.overrideInputClass
                         ? ''
-                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
+                        : 'mt-1 block w-full rounded-xl py-3 bg-slate-700 border-slate-900 text-slate-100 focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
                     } ${item.inputClass ?? ''} ${
                       v$.form[item.model].$error
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -60,7 +60,7 @@
                     :class="`${
                       item.overrideInputClass
                         ? ''
-                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
+                        : 'mt-1 block w-full rounded-xl py-3 bg-slate-700 border-slate-900 text-slate-100 focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
                     } ${item.inputClass ?? ''} ${
                       v$.form[item.model].$error
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -83,7 +83,7 @@
                   :class="`${
                     item.overrideInputClass
                       ? ''
-                      : 'mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm'
+                      : 'mt-1 block w-full rounded-xl border border-slate-900 bg-slate-700 text-slate-100 py-2 px-3  focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm'
                   } ${item.inputClass} ${
                     v$.form[item.model].$error
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -109,7 +109,7 @@
                   :class="`${
                     item.overrideInputClass
                       ? ''
-                      : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
+                      : 'mt-1 block w-full rounded-xl py-3 bg-slate-700 border-slate-900 text-slate-100 focus:border-gray-500 focus:ring-gray-500 sm:text-sm'
                   } ${item.inputClass ?? ''} ${
                     v$.form[item.model].$error
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -147,7 +147,7 @@
                     " />
                   <label
                     :class="`${
-                      item.overrideLabelClass ? '' : 'ml-3 block text-sm font-medium text-gray-700'
+                      item.overrideLabelClass ? '' : 'ml-3 block text-sm font-medium text-slate-200'
                     } ${item.labelClass ?? ''}`"
                     :for="`checkbox-${itemIndex}`">
                     {{ item.label }}
@@ -155,7 +155,7 @@
                       v-if="
                         item.validate && item.validate.required && item.validate.requiredIndicator
                       "
-                      class="text-danger fw-bolder"
+                      class="text-red-500 font-bold"
                       >*</span
                     >
                   </label>

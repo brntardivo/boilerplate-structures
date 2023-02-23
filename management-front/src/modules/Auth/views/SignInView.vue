@@ -1,31 +1,29 @@
 <template>
   <div class="sign-in-view">
-    <header-container title="Sign in to your account"> </header-container>
-    <content-container>
+    <HeaderContainer title="Sign in to your account" />
+    <ContentContainer>
       <div class="space-y-6">
-        <base-form :template="template">
+        <BaseForm :template="template">
           <template #forgot-password>
             <div class="text-sm text-end">
-              <router-link
+              <RouterLink
                 :to="{ name: 'AuthPasswordRecovery' }"
-                class="font-medium text-gray-600 hover:text-gray-500">
+                class="font-medium text-slate-100 hover:text-slate-200">
                 Forgot your password?
-              </router-link>
+              </RouterLink>
             </div>
           </template>
           <template #action="{ callback }">
-            <base-button @click="submit(callback)" :loading="loading">
+            <BaseButton @click="submit(callback)" :loading="loading">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <lock-closed-icon
-                  class="h-5 w-5 text-gray-500 group-hover:text-gray-400"
-                  aria-hidden="true" />
+                <LockClosedIcon class="h-5 w-5 text-slate-100" aria-hidden="true" />
               </span>
               Sign In
-            </base-button>
+            </BaseButton>
           </template>
-        </base-form>
+        </BaseForm>
       </div>
-    </content-container>
+    </ContentContainer>
   </div>
 </template>
 

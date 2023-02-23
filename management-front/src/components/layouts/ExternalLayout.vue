@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-full bg-zinc-100">
+  <div class="relative min-h-full">
     <RouterView v-slot="{ Component }">
       <Transition name="fade" mode="out-in">
         <Component :is="Component" />

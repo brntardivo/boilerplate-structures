@@ -1,26 +1,22 @@
 <template>
-  <div>
-    <div class="flex justify-between mb-8">
+  <div class="">
+    <div class="flex flex-col md:flex-row justify-between mb-8">
       <div class="flex-shrink">
-        <h1 class="font-bold text-[2rem]">Admins</h1>
+        <BaseButton :to="{ name: 'Home' }" class="mr-4" color="green" :icon="true">
+          <PlusIcon class="w-5 text-slate-100" />
+        </BaseButton>
       </div>
-      <div class="w-1/3">
+      <div class="w-full md:w-1/2 flex flex-row items-center">
         <BaseSearchInput placeholder="Search" v-model="search" />
       </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <RouterLink
-        :to="{}"
-        class="flex flex-col items-center justify-center border-dashed border-[1px] border-gray-400 rounded-md bg-gray-200 hover:bg-gray-300 transition-all delay-75 h-48">
-        <UserPlusIcon class="w-10 h-10 mb-3 text-gray-500" />
-        <p class="mb-0 font-medium">Create a new admin</p>
-      </RouterLink>
       <template v-if="admins.length > 0">
         <template v-if="filteredAdmins.length > 0">
           <div
             v-for="(admin, adminIndex) in filteredAdmins"
             :key="adminIndex"
-            class="bg-white shadow rounded-md w-full h-48">
+            class="bg-slate-700 shadow rounded-md w-full h-48">
             <!--  -->
           </div>
         </template>
@@ -34,16 +30,16 @@
 <script lang="ts">
 export default {
   name: 'AdminsView',
-  components: { BaseSearchInput },
 };
 </script>
 
 <script setup lang="ts">
-import { UserPlusIcon } from '@heroicons/vue/24/outline';
+import { PlusIcon } from '@heroicons/vue/24/outline';
 import { ref, reactive, computed, onBeforeMount } from 'vue';
 import { IAdmin } from '@interfaces/IAdmin';
 import BaseSearchInput from '@components/forms/BaseSearchInput.vue';
 import { AdminService } from '@services/AdminService';
+import BaseButton from '@components/buttons/BaseButton.vue';
 
 let admins = reactive<IAdmin[]>([]);
 const search = ref('');

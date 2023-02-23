@@ -1,25 +1,24 @@
 <template>
   <div class="password-recovery-view">
-    <header-container
+    <HeaderContainer
       title="Password recovery"
-      subtitle="Enter your email below to start the password recovery process" />
-    <content-container>
-      <go-back-anchor />
-      <div class="mt-10 space-y-6">
-        <base-form :template="template">
+      subtitle="Enter your email below to start the password recovery process"
+      :back="true" />
+
+    <ContentContainer>
+      <div class="space-y-6">
+        <BaseForm :template="template">
           <template #action="{ callback }">
-            <base-button @click="submit(callback)" :loading="loading">
+            <BaseButton @click="submit(callback)" :loading="loading">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <paper-airplane-icon
-                  class="h-5 w-5 text-gray-500 group-hover:text-gray-400"
-                  aria-hidden="true" />
+                <PaperAirplaneIcon class="h-5 w-5 text-slate-100" aria-hidden="true" />
               </span>
               Send email
-            </base-button>
+            </BaseButton>
           </template>
-        </base-form>
+        </BaseForm>
       </div>
-    </content-container>
+    </ContentContainer>
   </div>
 </template>
 
@@ -33,7 +32,6 @@ export default {
 import BaseForm, { IBaseFormItem, ICallback } from '@components/forms/BaseForm.vue';
 import BaseButton from '@components/buttons/BaseButton.vue';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/outline';
-import GoBackAnchor from '../components/GoBackAnchor.vue';
 import { ref } from 'vue';
 import { AuthService } from '@services/AuthService';
 import ContentContainer from '../components/ContentContainer.vue';

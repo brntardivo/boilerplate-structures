@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-wrapper">
     <Transition name="fade" mode="out-in">
       <Component :is="layout">
         <RouterView />

@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/main/server.ts",
     "prod": "tsup src --onSuccess 'node dist/server.js'",
     "build": "tsup src",
-    "cmd": "tsx src/command.ts"
+    "cmd": "tsx src/main/command.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

@@ -1,36 +1,45 @@
 <template>
   <div class="w-full">
-    <nav class="px-8 bg-gradient-to-r from-gray-600 to-gray-800 mb-8">
+    <nav class="px-8 mb-8">
       <div class="flex flex-col items-center">
         <div class="flex items-center justify-between w-full h-16">
           <div class="flex-shrink-0 mr-8">
-            <CodeBracketIcon class="mx-auto h-12 w-auto text-gray-100" />
+            <CodeBracketIcon class="mx-auto h-12 w-auto text-slate-100" />
           </div>
-          <div class="w-full items-center space-x-2 hidden md:flex">
+          <div class="w-full items-center space-x-1 hidden md:flex">
             <template v-if="navItems.length">
               <div v-for="(navItem, navIndex) in navItems" :key="navIndex">
                 <RouterLink
                   :to="{ name: navItem.route }"
-                  class="py-2 px-4 font-medium text-sm transition-all delay-100 rounded-md hover:text-white"
+                  class="relative group py-2 px-4 font-medium text-sm transition-all delay-100 rounded-md hover:text-slate-200"
                   :class="{
-                    'text-white bg-gray-900/60': navItem.active,
-                    'text-gray-100': !navItem.active,
+                    'text-slate-100': navItem.active,
+                    'text-slate-400': !navItem.active,
                   }"
-                  >{{ navItem.label }}</RouterLink
-                >
+                  >{{ navItem.label }}
+                  <span
+                    class="absolute bottom-0 left-1/2 -translate-x-1/2 group-hover:w-5 h-1 bg-slate-400 rounded-lg transition-all delay-75"
+                    :class="{
+                      'w-5': navItem.active,
+                      'w-0': !navItem.active,
+                    }" />
+                </RouterLink>
               </div>
             </template>
           </div>
           <div class="hidden md:flex items-center">
-            <a href="#" class="decoration-inherit mr-4">
-              <BellIcon class="h-6 w-6 text-gray-100 hover:text-white transition-all delay-100" />
+            <a
+              href="#"
+              class="group decoration-inherit mx-4 bg-slate-700 rounded-xl w-10 h-10 flex items-center justify-center focus:border-gray-500 focus:ring-gray-500">
+              <BellIcon
+                class="w-5 text-slate-400 group-hover:text-white transition-all delay-100" />
             </a>
             <BaseDropdownButton type="list" :list="userDropdownMenu">
               <template #element>
                 <div
-                  class="w-9 h-9 relative rounded-full border-[.5px] border-gray-100 bg-gray-600 hover:border-white transition-all delay-100 shadow-sm">
+                  class="w-10 h-10 relative rounded-xl bg-slate-700 hover:border-white transition-all delay-100 shadow-sm">
                   <div
-                    class="absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-[1px] border-gray-200 shadow"></div>
+                    class="absolute -top-1 -left-1 w-4 h-4 rounded-full bg-green-400 border-[3px] border-slate-900 shadow"></div>
                 </div>
               </template>
             </BaseDropdownButton>
@@ -38,7 +47,7 @@
           <div class="flex md:hidden">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-gray-900/60 p-2 text-white hover:bg-gray-900/40 focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all delay-100"
+              class="group decoration-inherit bg-slate-700 rounded-xl w-10 h-10 flex items-center justify-center focus:border-gray-500 focus:ring-gray-500"
               aria-controls="mobile-menu"
               aria-expanded="false"
               @click="menuOpened = !menuOpened">
@@ -47,7 +56,7 @@
                 <component
                   :is="menuOpened ? XMarkIcon : Bars3Icon"
                   :key="menuOpened"
-                  class="text-white w-5 h-5" />
+                  class="text-white w-5" />
               </Transition>
             </button>
           </div>
@@ -60,23 +69,29 @@
           'h-0': !menuOpened,
         }"
         id="mobile-menu">
-        <div class="border-t-[.5px] border-gray-500/60 py-4">
+        <div class="pb-4">
           <div class="space-y-1 p-2 rounded-lg">
             <template v-if="navItems.length">
               <div class="flex" v-for="(navItem, navIndex) in navItems" :key="navIndex">
                 <RouterLink
                   :to="{ name: navItem.route }"
-                  class="w-full py-2 px-4 mb-1 font-medium text-base transition-all delay-100 rounded-md hover:text-white"
+                  class="relative group py-2 px-4 font-medium transition-all delay-100 rounded-md hover:text-slate-200"
                   :class="{
-                    'text-white bg-gray-900/60': navItem.active,
-                    'text-gray-100': !navItem.active,
+                    'text-slate-100': navItem.active,
+                    'text-slate-400': !navItem.active,
                   }"
-                  >{{ navItem.label }}</RouterLink
-                >
+                  >{{ navItem.label }}
+                  <span
+                    class="absolute bottom-0 left-4 group-hover:w-10 h-1 bg-slate-400 rounded-lg transition-all delay-75"
+                    :class="{
+                      'w-10': navItem.active,
+                      'w-0': !navItem.active,
+                    }" />
+                </RouterLink>
               </div>
             </template>
-            <div class="border-t-[.5px] border-gray-500/60">
-              <div class="flex flex-row items-center my-4 px-4 py-2 bg-gray-900/60 rounded-lg">
+            <div class="">
+              <div class="flex flex-row items-center my-4 px-4 py-2 bg-slate-700/60 rounded-lg">
                 <div class="flex-grow">
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pr-3">

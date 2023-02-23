@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-full bg-zinc-100">
+  <div class="relative min-h-full container mx-auto">
     <InternalNavigationBar />
     <main class="mx-8">
       <RouterView v-slot="{ Component }">

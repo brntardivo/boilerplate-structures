@@ -16,17 +16,18 @@
     "experimentalDecorators": true,
     "typeRoots": ["src/types", "node_modules/@types"],
     "paths": {
-      "@domains/*": ["./src/domains/*"],
-      "@database/*": ["./src/database/*"],
-      "@entities/*": ["src/entities/*"],
-      "@middlewares/*": ["./src/middlewares/*"],
-      "@providers/*": ["./src/providers/*"],
-      "@repositories/*": ["./src/repositories/*"],
-      "@config/*": ["./src/config/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@src/*": ["./src/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@main/*": ["./src/main/*"],
+      "@data/*": ["./src/data/*"],
+      "@validation/*": ["src/main/middlewares/validation/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/main/controllers/management/signIn/.controller.ts",
+    "src/main/controllers/management/signIn/.controller.ts"
+  ],
   "exclude": ["node_modules"]
 }

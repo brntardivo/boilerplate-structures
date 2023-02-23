@@ -1,11 +1,10 @@
 <template>
-  <div class="go-back-anchor">
-    <router-link
+  <div class="go-back-anchor group">
+    <RouterLink
       :to="{ name }"
-      class="absolute top-0 left-0 text-sm h-16 w-20 flex flex-row items-center justify-center">
-      <chevron-left-icon aria-hidden="true" class="h-4" />
-      <span class="font-medium">Back</span>
-    </router-link>
+      class="text-sm h-10 w-10 flex flex-row items-center justify-center bg-slate-700 rounded-xl">
+      <ChevronLeftIcon aria-hidden="true" class="h-4 text-slate-200" />
+    </RouterLink>
   </div>
 </template>
 
